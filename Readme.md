@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Таня Мальцева](https://up.htmlacademy.ru/ecmascript/14/user/1331067).
-* Наставник: `Неизвестно`.
+* Наставник: [Даниил Царёв](https://htmlacademy.ru/profile/id945835).
 
 ---
 
