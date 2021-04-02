@@ -22,6 +22,9 @@ render(siteHeaderElement, createUserRankTemplate(), 'beforeend');
 const siteMainElement = document.querySelector('.main');
 render(siteMainElement, createSiteMenuTemplate(), 'beforeend');
 render(siteMainElement, createFilmListTemplate(), 'beforeend');
+render(siteMainElement,createFilmInformationTemplate(), 'beforeend');
+
+document.querySelector('.film-details').classList.add('visually-hidden');
 
 const filmList = document.querySelector('.films-list__container');
 
