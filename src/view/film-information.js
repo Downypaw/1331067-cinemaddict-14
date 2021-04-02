@@ -167,5 +167,5 @@ export const createFilmInformationTemplate = () => {
         </section>
       </div>
     </form>
-  </section>`
+  </section>`;
 };
