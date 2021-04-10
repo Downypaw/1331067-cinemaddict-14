@@ -1,5 +1,5 @@
-export const createFilmCountTemplate = () => {
+export const createFilmCountTemplate = (films) => {
   return `
-  <p>0 movies inside</p>
+  <p>${films.length} movies inside</p>
   `;
 };
