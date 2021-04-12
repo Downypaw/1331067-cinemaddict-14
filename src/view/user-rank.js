@@ -1,12 +1,15 @@
-export const createUserRankTemplate = (watchedFilms) => {
-  let rank = 0;
+const getRank = (watchedFilms) => {
   if (watchedFilms > 0 && watchedFilms <= 10) {
-    rank = 'Novice';
+    return 'Novice';
   } else if (watchedFilms > 10 && watchedFilms <= 20){
-    rank = 'Fan';
+    return 'Fan';
   } else {
-    rank = 'Movie Buff';
+    return 'Movie Buff';
   }
+};
+
+export const createUserRankTemplate = (watchedFilms) => {
+  const rank = getRank(watchedFilms);
   const rankContainer = watchedFilms > 0 ? `<p class="profile__rating">${rank}</p>` : '';
 
   return `<section class="header__profile profile">

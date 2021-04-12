@@ -1,5 +1,5 @@
 import {comments} from './comment.js';
-import {generateId, createText, getRandomSomething, getRandomInteger, getReleaseDate} from '../util.js';
+import {generateId, createText, getRandomArrayElement, getRandomInteger, getReleaseDate} from '../util.js';
 import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
 const MAX_VALUE = 3;
@@ -68,14 +68,13 @@ const getRandomArray = (minIndex, maxIndex, array) => {
 };
 
 const generateDuration = () => {
-  if(Boolean(getRandomInteger(0, 1)) === true) {
+  if (Boolean(getRandomInteger(0, 1)) === true) {
     const minute = getRandomInteger(0, 59);
     const hour = getRandomInteger(1, 3);
     return hour + 'h ' + minute + 'm';
-  } else {
-    const minute = getRandomInteger(30, 59);
-    return minute + 'm';
   }
+  const minute = getRandomInteger(30, 59);
+  return minute + 'm';
 };
 
 const getCommentsKeys = () => {
@@ -92,20 +91,20 @@ export const generateFilm = () => {
   const year = getRandomInteger(1980, 2021);
   return {
     id: filmId(),
-    title: getRandomSomething(TITLES),
-    originalTitle: getRandomSomething(ORIGINAL_TITLES),
-    poster: getRandomSomething(POSTERS),
+    title: getRandomArrayElement(TITLES),
+    originalTitle: getRandomArrayElement(ORIGINAL_TITLES),
+    poster: getRandomArrayElement(POSTERS),
     genre: getRandomArray(MIN_VALUE, MAX_VALUE, GENRES),
     rank: getRandomFloat(MIN_RANK, MAX_RANK - 1),
-    director: getRandomSomething(NAMES),
+    director: getRandomArrayElement(NAMES),
     screenwriters: getRandomArray(MIN_VALUE, MAX_VALUE, NAMES),
     cast: getRandomArray(MIN_VALUE, MAX_VALUE, NAMES),
-    country: getRandomSomething(COUNTRIES),
+    country: getRandomArrayElement(COUNTRIES),
     year: year,
     releaseDate: getReleaseDate(year),
     duration: generateDuration(),
     description: createText(MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES),
-    ageRating: getRandomSomething(AGE_RATINGS),
+    ageRating: getRandomArrayElement(AGE_RATINGS),
     isWatchList: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),

@@ -1,41 +1,31 @@
+const createGenreTemplate = (genre) => {
+  return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
+};
+
+const createCommentTemplate = (comments, allComments) => {
+  return `${comments.map((commentKey) => allComments.find((item) => item.id === commentKey))
+    .map((comment) =>
+      `<li class="film-details__comment">
+        <span class="film-details__comment-emoji">
+          <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
+        </span>
+        <div>
+          <p class="film-details__comment-text">${comment.text}</p>
+          <p class="film-details__comment-info">
+            <span class="film-details__comment-author">${comment.author}</span>
+            <span class="film-details__comment-day">${comment.date}</span>
+            <button class="film-details__comment-delete">Delete</button>
+          </p>
+        </div>
+      </li>`,
+    ).join('')}`;
+};
+
 export const createFilmInformationTemplate = (film, allComments) => {
   const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, duration, genre, poster, description, comments, isWatchList, isWatched, isFavorite, ageRating} = film;
 
-  const createGenreTemplate = (genre) => {
-    return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
-  };
-
-  const createCommentTemplate = (comments) => {
-    return `${comments.map((commentKey) => allComments.find((item) => item.id === commentKey))
-      .map((comment) =>
-        `<li class="film-details__comment">
-          <span class="film-details__comment-emoji">
-            <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
-          </span>
-          <div>
-            <p class="film-details__comment-text">${comment.text}</p>
-            <p class="film-details__comment-info">
-              <span class="film-details__comment-author">${comment.author}</span>
-              <span class="film-details__comment-day">${comment.date}</span>
-              <button class="film-details__comment-delete">Delete</button>
-            </p>
-          </div>
-        </li>`,
-      ).join('')}`;
-  };
-
-  const genresTitle = genre.length > 1 ? 'Genres' : 'Genre';
-
-  const genresTemplate = createGenreTemplate(genre);
-
-  const commentTemplate = createCommentTemplate(comments);
-
   const makeChecked = (key) => {
-    if(key === true) {
-      return 'checked';
-    } else {
-      return '';
-    }
+    return key === true ? 'checked' : '';
   };
 
   return `<section class="film-details">
@@ -89,9 +79,9 @@ export const createFilmInformationTemplate = (film, allComments) => {
                 <td class="film-details__cell">${country}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${genresTitle}</td>
+                <td class="film-details__term">${genre.length > 1 ? 'Genres' : 'Genre'}</td>
                 <td class="film-details__cell">
-                  ${genresTemplate}
+                  ${createGenreTemplate(genre)}
                 </td>
               </tr>
             </table>
@@ -117,7 +107,7 @@ export const createFilmInformationTemplate = (film, allComments) => {
           <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
           <ul class="film-details__comments-list">
-            ${commentTemplate}
+            ${createCommentTemplate(comments, allComments)}
           </ul>
 
           <div class="film-details__new-comment">

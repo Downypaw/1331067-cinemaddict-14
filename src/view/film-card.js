@@ -1,16 +1,18 @@
+const MAX_STRING_LENGTH = 140;
+const SUBSTRING_LENGTH = 139;
+
+const getDescription = (text) => {
+  return text.length > MAX_STRING_LENGTH ? text.substr(0, SUBSTRING_LENGTH) + '...' : text;
+};
+
 export const createFilmCardTemplate = (film) => {
   const {title, rank, year, duration, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
   let {description} = film;
-  if(description.length > 140) {
-    description = description.substr(0, 139) + '...';
-  }
+
+  description = getDescription(description);
 
   const makeActive = (key) => {
-    if(key === true) {
-      return 'film-card__controls-item--active';
-    } else {
-      return '';
-    }
+    return key === true ? 'film-card__controls-item--active' : '';
   };
 
   return `<article class="film-card">
