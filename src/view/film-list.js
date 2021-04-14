@@ -1,4 +1,6 @@
-export const createFilmListTemplate = (films) => {
+import {createElement} from '../util.js';
+
+const createFilmListTemplate = (films) => {
   let container = '';
   let title = 'There are no movies in our database';
   let hiddenClass = '';
@@ -16,3 +18,26 @@ export const createFilmListTemplate = (films) => {
       ${container}
     </section>`;
 };
+
+export default class FilmList {
+  constructor(films) {
+    this._films = films;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmListTemplate(this._films);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
