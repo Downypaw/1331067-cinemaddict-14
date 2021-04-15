@@ -1,3 +1,5 @@
+import {createElement} from '../dom-util.js';
+
 const getRank = (watchedFilms) => {
   if (watchedFilms > 0 && watchedFilms <= 10) {
     return 'Novice';
@@ -8,7 +10,7 @@ const getRank = (watchedFilms) => {
   }
 };
 
-export const createUserRankTemplate = (watchedFilms) => {
+export const createTemplate = (watchedFilms) => {
   const rank = getRank(watchedFilms);
   const rankContainer = watchedFilms > 0 ? `<p class="profile__rating">${rank}</p>` : '';
 
@@ -17,3 +19,26 @@ export const createUserRankTemplate = (watchedFilms) => {
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
 };
+
+export default class UserRank {
+  constructor(watchedFilms) {
+    this._watchedFilms = watchedFilms;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTemplate(this._watchedFilms);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

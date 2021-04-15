@@ -1,8 +1,4 @@
-import dayjs from 'dayjs';
-import dayjsRandom from 'dayjs-random';
-dayjs.extend(dayjsRandom);
-
-const generateId = () => {
+export const generateId = () => {
   let id = 1;
 
   return () => {
@@ -10,7 +6,7 @@ const generateId = () => {
   };
 };
 
-const createText = (minSentenceCount, maxSentenceCount, array) => {
+export const createText = (minSentenceCount, maxSentenceCount, array) => {
   const randomIndex = getRandomInteger(minSentenceCount, maxSentenceCount);
 
   let text = '';
@@ -27,24 +23,14 @@ const createText = (minSentenceCount, maxSentenceCount, array) => {
   return text;
 };
 
-const getRandomInteger = (parameter1, parameter2) => {
+export const getRandomInteger = (parameter1, parameter2) => {
   const min = Math.ceil(parameter1);
   const max = Math.floor(parameter2);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomArrayElement = (array) => {
+export const getRandomArrayElement = (array) => {
   const randomIndex = getRandomInteger(0, array.length - 1);
 
   return array[randomIndex];
 };
-
-const getRandomDate = () => {
-  return dayjs.between('2020-01-01', '2021-04-07').format('YYYY/MM/DD HH:mm');
-};
-
-const getReleaseDate = (year) => {
-  return dayjs.between('' + year + '-01-01', '' + year + '-12-31').format('DD MMMM YYYY');
-};
-
-export {generateId, createText, getRandomArrayElement, getRandomInteger, getRandomDate, getReleaseDate};

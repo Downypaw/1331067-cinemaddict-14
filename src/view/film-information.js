@@ -1,3 +1,5 @@
+import {createElement} from '../dom-util.js';
+
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
 };
@@ -21,7 +23,7 @@ const createCommentTemplate = (comments, allComments) => {
     ).join('')}`;
 };
 
-export const createFilmInformationTemplate = (film, allComments) => {
+const createTemplate = (film, allComments) => {
   const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, duration, genre, poster, description, comments, isWatchList, isWatched, isFavorite, ageRating} = film;
 
   const makeChecked = (key) => {
@@ -144,3 +146,27 @@ export const createFilmInformationTemplate = (film, allComments) => {
     </form>
   </section>`;
 };
+
+export default class FilmInformation {
+  constructor(film, filmComments) {
+    this._film = film;
+    this._comments = filmComments;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTemplate(this._film, this._comments);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

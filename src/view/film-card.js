@@ -1,3 +1,5 @@
+import {createElement} from '../dom-util.js';
+
 const MAX_STRING_LENGTH = 140;
 const SUBSTRING_LENGTH = 139;
 
@@ -5,7 +7,7 @@ const getDescription = (text) => {
   return text.length > MAX_STRING_LENGTH ? text.substr(0, SUBSTRING_LENGTH) + '...' : text;
 };
 
-export const createFilmCardTemplate = (film) => {
+const createTemplate = (film) => {
   const {title, rank, year, duration, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
   let {description} = film;
 
@@ -33,3 +35,26 @@ export const createFilmCardTemplate = (film) => {
     </div>
   </article>`;
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,4 +1,5 @@
-import {generateId, createText, getRandomArrayElement, getRandomDate} from '../util.js';
+import {generateId, createText, getRandomArrayElement} from '../util.js';
+import {getRandomDate} from '../date-time-util.js';
 import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
 const EMOTIONS = [
