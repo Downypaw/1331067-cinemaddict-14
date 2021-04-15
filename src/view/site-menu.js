@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
 const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
@@ -6,7 +6,7 @@ const createFilterItemTemplate = (filter) => {
   return `<a href="#${name}" class="main-navigation__item">${name} ${counter}</a>`;
 };
 
-const createSiteMenuTemplate = (filterItems) => {
+const createTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter))
     .join('');
@@ -25,7 +25,7 @@ export default class SiteMenu {
   }
 
   getTemplate() {
-    return createSiteMenuTemplate(this._filters);
+    return createTemplate(this._filters);
   }
 
   getElement() {

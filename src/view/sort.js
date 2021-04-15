@@ -1,6 +1,6 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
-const createSortTemplate = () => {
+const createTemplate = () => {
   return `<ul class="sort">
     <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
     <li><a href="#" class="sort__button">Sort by date</a></li>
@@ -14,7 +14,7 @@ export default class Sort {
   }
 
   getTemplate() {
-    return createSortTemplate();
+    return createTemplate();
   }
 
   getElement() {

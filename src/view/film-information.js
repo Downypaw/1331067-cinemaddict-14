@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -23,7 +23,7 @@ const createCommentTemplate = (comments, allComments) => {
     ).join('')}`;
 };
 
-const createFilmInformationTemplate = (film, allComments) => {
+const createTemplate = (film, allComments) => {
   const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, duration, genre, poster, description, comments, isWatchList, isWatched, isFavorite, ageRating} = film;
 
   const makeChecked = (key) => {
@@ -155,7 +155,7 @@ export default class FilmInformation {
   }
 
   getTemplate() {
-    return createFilmInformationTemplate(this._film, this._comments);
+    return createTemplate(this._film, this._comments);
   }
 
   getElement() {

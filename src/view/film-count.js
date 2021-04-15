@@ -1,6 +1,6 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
-const createFilmCountTemplate = (filmCount) => {
+const createTemplate = (filmCount) => {
   return `<p>${filmCount} movies inside</p>`;
 };
 
@@ -11,7 +11,7 @@ export default class FilmCount {
   }
 
   getTemplate() {
-    return createFilmCountTemplate(this._filmCount);
+    return createTemplate(this._filmCount);
   }
 
   getElement() {

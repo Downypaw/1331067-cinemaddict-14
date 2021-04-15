@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
 const getRank = (watchedFilms) => {
   if (watchedFilms > 0 && watchedFilms <= 10) {
@@ -10,7 +10,7 @@ const getRank = (watchedFilms) => {
   }
 };
 
-export const createUserRankTemplate = (watchedFilms) => {
+export const createTemplate = (watchedFilms) => {
   const rank = getRank(watchedFilms);
   const rankContainer = watchedFilms > 0 ? `<p class="profile__rating">${rank}</p>` : '';
 
@@ -27,7 +27,7 @@ export default class UserRank {
   }
 
   getTemplate() {
-    return createUserRankTemplate(this._watchedFilms);
+    return createTemplate(this._watchedFilms);
   }
 
   getElement() {

@@ -1,6 +1,6 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
-const createTopRatedListTemplate = () => {
+const createTemplate = () => {
   return `<section class="films-list films-list--extra">
     <h2 class="films-list__title">Top rated</h2>
 
@@ -14,7 +14,7 @@ export default class TopRatedList {
   }
 
   getTemplate() {
-    return createTopRatedListTemplate();
+    return createTemplate();
   }
 
   getElement() {

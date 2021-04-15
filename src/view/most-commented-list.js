@@ -1,6 +1,6 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
-const createMostCommentedListTemplate = () => {
+const createTemplate = () => {
   return `<section class="films-list films-list--extra">
     <h2 class="films-list__title">Most commented</h2>
 
@@ -14,7 +14,7 @@ export default class MostCommentedList {
   }
 
   getTemplate() {
-    return createMostCommentedListTemplate();
+    return createTemplate();
   }
 
   getElement() {

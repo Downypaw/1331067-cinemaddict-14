@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
 const MAX_STRING_LENGTH = 140;
 const SUBSTRING_LENGTH = 139;
@@ -7,7 +7,7 @@ const getDescription = (text) => {
   return text.length > MAX_STRING_LENGTH ? text.substr(0, SUBSTRING_LENGTH) + '...' : text;
 };
 
-const createFilmCardTemplate = (film) => {
+const createTemplate = (film) => {
   const {title, rank, year, duration, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
   let {description} = film;
 
@@ -43,7 +43,7 @@ export default class FilmCard {
   }
 
   getTemplate() {
-    return createFilmCardTemplate(this._film);
+    return createTemplate(this._film);
   }
 
   getElement() {

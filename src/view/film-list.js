@@ -1,6 +1,6 @@
-import {createElement} from '../util.js';
+import {createElement} from '../dom-util.js';
 
-const createFilmListTemplate = (films) => {
+const createTemplate = (films) => {
   let container = '';
   let title = 'There are no movies in our database';
   let hiddenClass = '';
@@ -26,7 +26,7 @@ export default class FilmList {
   }
 
   getTemplate() {
-    return createFilmListTemplate(this._films);
+    return createTemplate(this._films);
   }
 
   getElement() {
