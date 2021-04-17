@@ -1,4 +1,4 @@
-import {createElement} from '../dom-util.js';
+import {createElement} from '../util/dom-util.js';
 
 export default class Abstract {
   constructor() {
@@ -8,21 +8,21 @@ export default class Abstract {
 
     this._element = null;
     this._callback = {};
- }
+  }
 
- getTemplate() {
-   throw new Error('Abstract method not implemented: getTemplate');
- }
+  getTemplate() {
+    throw new Error('Abstract method not implemented: getTemplate');
+  }
 
- getElement() {
-   if (!this._element) {
-     this._element = createElement(this.getTemplate());
-   }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
 
-   return this._element;
- }
+    return this._element;
+  }
 
- removeElement() {
-   this._element = null;
+  removeElement() {
+    this._element = null;
   }
 }

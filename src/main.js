@@ -11,7 +11,7 @@ import SortView from './view/sort.js';
 import {generateFilm} from './mock/film.js';
 import {generateFilter} from './mock/filter.js';
 import {comments} from './mock/comment.js';
-import {render, onEscKeyDown} from './dom-util.js';
+import {render, onEscKeyDown, remove} from './util/dom-util.js';
 
 const FILM_COUNT = 20;
 const FILM_COUNT_PER_STEP = 5;
@@ -48,7 +48,7 @@ const renderFilm = (filmListElement, film) => {
     });
   });
 
-  render(filmListElement, filmComponent.getElement());
+  render(filmListElement, filmComponent);
 };
 
 const renderFilmList = (films) => {
@@ -66,15 +66,15 @@ const renderFilmList = (films) => {
     return valueB - valueA;
   };
 
-  render(siteMainElement, new SiteMenuView(filters).getElement());
-  render(siteMainElement, new SortView().getElement());
-  render(siteMainElement, new FilmListView(films).getElement());
+  render(siteMainElement, new SiteMenuView(filters));
+  render(siteMainElement, new SortView());
+  render(siteMainElement, new FilmListView(films));
 
   const filmList = document.querySelector('.films-list__container');
 
   const contentSection = document.querySelector('.films');
-  render(contentSection, new TopRatedListView().getElement());
-  render(contentSection, new MostCommentedListView().getElement());
+  render(contentSection, new TopRatedListView());
+  render(contentSection, new MostCommentedListView());
 
   const extraLists = document.querySelectorAll('.films-list--extra');
 
@@ -101,10 +101,10 @@ const renderFilmList = (films) => {
 
     const showMoreButtonComponent = new ShowMoreButtonView();
 
-    render(contentSection, showMoreButtonComponent.getElement());
+    render(contentSection, showMoreButtonComponent);
 
 
-    showMoreButtonComponent.setClickHandler((evt) => {
+    showMoreButtonComponent.setClickHandler(() => {
       films
         .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
         .forEach((film) => renderFilm(filmList, film));
@@ -112,14 +112,14 @@ const renderFilmList = (films) => {
       renderedFilmCount += FILM_COUNT_PER_STEP;
 
       if (renderedFilmCount >= films.length) {
-        showMoreButton.remove();
+        remove(showMoreButtonComponent);
       }
     });
   }
 };
 
-render(siteHeaderElement, new UserRankView(filters.find((filter) => filter.name === 'History').count).getElement());
+render(siteHeaderElement, new UserRankView(filters.find((filter) => filter.name === 'History').count));
 
 renderFilmList(films);
 
-render(filmCountWrapper, new FilmCountView(films.length).getElement());
+render(filmCountWrapper, new FilmCountView(films.length));

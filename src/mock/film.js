@@ -1,6 +1,6 @@
 import {comments} from './comment.js';
-import {generateId, createText, getRandomArrayElement, getRandomInteger} from '../util.js';
-import {getReleaseDate} from '../date-time-util.js';
+import {generateId, createText, getRandomArrayElement, getRandomInteger} from '../util/common.js';
+import {getReleaseDate} from '../util/date-time-util.js';
 import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
 const MAX_VALUE = 3;
