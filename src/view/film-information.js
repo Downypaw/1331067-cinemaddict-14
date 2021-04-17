@@ -1,4 +1,4 @@
-import {createElement} from '../dom-util.js';
+import AbstractView from './abstract.js';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -147,26 +147,14 @@ const createTemplate = (film, allComments) => {
   </section>`;
 };
 
-export default class FilmInformation {
-  constructor(film, filmComments) {
+export default class FilmInformation extends AbstractView {
+  constructor(film) {
+    super();
     this._film = film;
-    this._comments = filmComments;
-    this._element = null;
+    this._filmComments = filmComments;
   }
 
   getTemplate() {
-    return createTemplate(this._film, this._comments);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+    return createFilterTemplate(this._film, this.filmComments);
   }
 }

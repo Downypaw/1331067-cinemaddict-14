@@ -1,4 +1,4 @@
-import {createElement} from '../dom-util.js';
+import AbstractView from './abstract.js';
 
 const getRank = (watchedFilms) => {
   if (watchedFilms > 0 && watchedFilms <= 10) {
@@ -20,25 +20,13 @@ export const createTemplate = (watchedFilms) => {
   </section>`;
 };
 
-export default class UserRank {
+export default class UserRank extends AbstractView {
   constructor(watchedFilms) {
+    super();
     this._watchedFilms = watchedFilms;
-    this._element = null;
   }
 
   getTemplate() {
     return createTemplate(this._watchedFilms);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
