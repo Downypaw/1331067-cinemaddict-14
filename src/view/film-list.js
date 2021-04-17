@@ -20,7 +20,12 @@ const createTemplate = (films) => {
 };
 
 export default class FilmList extends AbstractView {
+  constructor(films) {
+    super();
+    this._films = films;
+  }
+
   getTemplate() {
-    return createTemplate();
+    return createTemplate(this._films);
   }
 }

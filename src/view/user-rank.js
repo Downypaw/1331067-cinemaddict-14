@@ -10,7 +10,7 @@ const getRank = (watchedFilms) => {
   }
 };
 
-export const createTemplate = (watchedFilms) => {
+const createTemplate = (watchedFilms) => {
   const rank = getRank(watchedFilms);
   const rankContainer = watchedFilms > 0 ? `<p class="profile__rating">${rank}</p>` : '';
 

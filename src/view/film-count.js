@@ -11,6 +11,6 @@ export default class FilmCount extends AbstractView {
   }
 
   getTemplate() {
-    return createFilterTemplate(this._filmCount);
+    return createTemplate(this._filmCount);
   }
 }

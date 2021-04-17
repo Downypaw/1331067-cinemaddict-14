@@ -25,6 +25,6 @@ export default class SiteMenu extends AbstractView {
   }
 
   getTemplate() {
-    return createFilterTemplate(this._filters);
+    return createTemplate(this._filters);
   }
 }

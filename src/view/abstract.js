@@ -1,11 +1,13 @@
-import {createElement} from '../utils.js';
+import {createElement} from '../dom-util.js';
 
 export default class Abstract {
   constructor() {
     if (new.target === Abstract) {
       throw new Error('Can\'t instantiate Abstract, only concrete one.');
     }
+
     this._element = null;
+    this._callback = {};
  }
 
  getTemplate() {

@@ -148,13 +148,24 @@ const createTemplate = (film, allComments) => {
 };
 
 export default class FilmInformation extends AbstractView {
-  constructor(film) {
+  constructor(film, filmComments) {
     super();
     this._film = film;
     this._filmComments = filmComments;
+    this._closePopupHandler = this._closePopupHandler.bind(this);
   }
 
   getTemplate() {
-    return createFilterTemplate(this._film, this.filmComments);
+    return createTemplate(this._film, this._filmComments);
+  }
+
+  _closePopupHandler(evt) {
+    evt.preventDefault();
+    this._callback.closePopupClick();
+  }
+
+  setClosePopupClickHandler (callback) {
+    this._callback.closePopupClick = callback;
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._closePopupHandler);
   }
 }

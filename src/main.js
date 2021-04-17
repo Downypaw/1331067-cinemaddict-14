@@ -26,33 +26,27 @@ const filmCountWrapper = document.querySelector('.footer__statistics');
 
 const renderFilm = (filmListElement, film) => {
   const filmComponent = new FilmCardView(film);
-  const filmInformationPopup = new FilmInformationView(film, comments).getElement();
+  const filmInformationPopup = new FilmInformationView(film, comments);
 
   const showPopup = () => {
-    siteMainElement.appendChild(filmInformationPopup);
+    siteMainElement.appendChild(filmInformationPopup.getElement());
     document.addEventListener('keydown', (evt) => {
       onEscKeyDown(evt, closePopup);
     });
   };
 
   const closePopup = () => {
-    if (filmInformationPopup.parentNode) {
-      siteMainElement.removeChild(filmInformationPopup);
+    if (filmInformationPopup.getElement().parentNode) {
+      siteMainElement.removeChild(filmInformationPopup.getElement());
     }
   };
 
-  const onFilmCardClick = () => {
+  filmComponent.setOpenPopupClickHandler(() => {
     showPopup();
-    filmInformationPopup.querySelector('.film-details__close-btn').addEventListener('click', () => {
+    filmInformationPopup.setClosePopupClickHandler(() => {
       closePopup();
     });
-  };
-
-  filmComponent.getElement().querySelector('.film-card__title').addEventListener('click', onFilmCardClick);
-
-  filmComponent.getElement().querySelector('.film-card__poster').addEventListener('click', onFilmCardClick);
-
-  filmComponent.getElement().querySelector('.film-card__comments').addEventListener('click', onFilmCardClick);
+  });
 
   render(filmListElement, filmComponent.getElement());
 };
@@ -105,12 +99,12 @@ const renderFilmList = (films) => {
   if (films.length > FILM_COUNT_PER_STEP) {
     let renderedFilmCount = FILM_COUNT_PER_STEP;
 
-    render(contentSection, new ShowMoreButtonView().getElement());
+    const showMoreButtonComponent = new ShowMoreButtonView();
 
-    const showMoreButton = contentSection.querySelector('.films-list__show-more');
+    render(contentSection, showMoreButtonComponent.getElement());
 
-    showMoreButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
+
+    showMoreButtonComponent.setClickHandler((evt) => {
       films
         .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
         .forEach((film) => renderFilm(filmList, film));
