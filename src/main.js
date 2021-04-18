@@ -11,7 +11,7 @@ import SortView from './view/sort.js';
 import {generateFilm} from './mock/film.js';
 import {generateFilter} from './mock/filter.js';
 import {comments} from './mock/comment.js';
-import {render, onEscKeyDown} from './dom-util.js';
+import {render, onEscKeyDown, remove} from './util/dom-util.js';
 
 const FILM_COUNT = 20;
 const FILM_COUNT_PER_STEP = 5;
@@ -26,35 +26,29 @@ const filmCountWrapper = document.querySelector('.footer__statistics');
 
 const renderFilm = (filmListElement, film) => {
   const filmComponent = new FilmCardView(film);
-  const filmInformationPopup = new FilmInformationView(film, comments).getElement();
+  const filmInformationPopup = new FilmInformationView(film, comments);
 
   const showPopup = () => {
-    siteMainElement.appendChild(filmInformationPopup);
+    siteMainElement.appendChild(filmInformationPopup.getElement());
     document.addEventListener('keydown', (evt) => {
       onEscKeyDown(evt, closePopup);
     });
   };
 
   const closePopup = () => {
-    if (filmInformationPopup.parentNode) {
-      siteMainElement.removeChild(filmInformationPopup);
+    if (filmInformationPopup.getElement().parentNode) {
+      siteMainElement.removeChild(filmInformationPopup.getElement());
     }
   };
 
-  const onFilmCardClick = () => {
+  filmComponent.setOpenPopupClickHandler(() => {
     showPopup();
-    filmInformationPopup.querySelector('.film-details__close-btn').addEventListener('click', () => {
+    filmInformationPopup.setClosePopupClickHandler(() => {
       closePopup();
     });
-  };
+  });
 
-  filmComponent.getElement().querySelector('.film-card__title').addEventListener('click', onFilmCardClick);
-
-  filmComponent.getElement().querySelector('.film-card__poster').addEventListener('click', onFilmCardClick);
-
-  filmComponent.getElement().querySelector('.film-card__comments').addEventListener('click', onFilmCardClick);
-
-  render(filmListElement, filmComponent.getElement());
+  render(filmListElement, filmComponent);
 };
 
 const renderFilmList = (films) => {
@@ -72,15 +66,15 @@ const renderFilmList = (films) => {
     return valueB - valueA;
   };
 
-  render(siteMainElement, new SiteMenuView(filters).getElement());
-  render(siteMainElement, new SortView().getElement());
-  render(siteMainElement, new FilmListView(films).getElement());
+  render(siteMainElement, new SiteMenuView(filters));
+  render(siteMainElement, new SortView());
+  render(siteMainElement, new FilmListView(films));
 
   const filmList = document.querySelector('.films-list__container');
 
   const contentSection = document.querySelector('.films');
-  render(contentSection, new TopRatedListView().getElement());
-  render(contentSection, new MostCommentedListView().getElement());
+  render(contentSection, new TopRatedListView());
+  render(contentSection, new MostCommentedListView());
 
   const extraLists = document.querySelectorAll('.films-list--extra');
 
@@ -105,12 +99,12 @@ const renderFilmList = (films) => {
   if (films.length > FILM_COUNT_PER_STEP) {
     let renderedFilmCount = FILM_COUNT_PER_STEP;
 
-    render(contentSection, new ShowMoreButtonView().getElement());
+    const showMoreButtonComponent = new ShowMoreButtonView();
 
-    const showMoreButton = contentSection.querySelector('.films-list__show-more');
+    render(contentSection, showMoreButtonComponent);
 
-    showMoreButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
+
+    showMoreButtonComponent.setClickHandler(() => {
       films
         .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
         .forEach((film) => renderFilm(filmList, film));
@@ -118,14 +112,14 @@ const renderFilmList = (films) => {
       renderedFilmCount += FILM_COUNT_PER_STEP;
 
       if (renderedFilmCount >= films.length) {
-        showMoreButton.remove();
+        remove(showMoreButtonComponent);
       }
     });
   }
 };
 
-render(siteHeaderElement, new UserRankView(filters.find((filter) => filter.name === 'History').count).getElement());
+render(siteHeaderElement, new UserRankView(filters.find((filter) => filter.name === 'History').count));
 
 renderFilmList(films);
 
-render(filmCountWrapper, new FilmCountView(films.length).getElement());
+render(filmCountWrapper, new FilmCountView(films.length));

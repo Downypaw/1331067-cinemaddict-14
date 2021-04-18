@@ -1,28 +1,16 @@
-import {createElement} from '../dom-util.js';
+import AbstractView from './abstract.js';
 
 const createTemplate = (filmCount) => {
   return `<p>${filmCount} movies inside</p>`;
 };
 
-export default class FilmCount {
+export default class FilmCount extends AbstractView {
   constructor(filmCount) {
+    super();
     this._filmCount = filmCount;
-    this._element = null;
   }
 
   getTemplate() {
     return createTemplate(this._filmCount);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
