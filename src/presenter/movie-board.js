@@ -3,8 +3,9 @@ import ShowMoreButtonView from '../view/show-more-button.js';
 import TopRatedListView from '../view/top-rated-list.js';
 import MostCommentedListView from '../view/most-commented-list.js';
 import SortView from '../view/sort.js';
-import {render, onEscKeyDown, remove} from '../util/dom-util.js';
+import {render, remove} from '../util/dom-util.js';
 import {sortFilmsRank, sortFilmsCommentsAmount} from '../util/film.js';
+import {updateItem} from '../util/common.js';
 import FilmPresenter from './film.js';
 
 
@@ -14,14 +15,17 @@ const EXTRA_FILM_COUNT = 2;
 export default class MovieBoard {
   constructor(movieListContainer) {
     this._movieListContainer = movieListContainer;
-    this._renderedFilmsCount = EXTRA_FILM_COUNT;
+    this._renderedFilmsCount = FILM_COUNT_PER_STEP;
     this._topFilmsCount = EXTRA_FILM_COUNT;
+    this._filmPresenter = {};
     this._topRatedListComponent = new TopRatedListView();
     this._mostCommentedListComponent = new MostCommentedListView();
     this._sortComponent = new SortView();
     this._showMoreButtonComponent = new ShowMoreButtonView();
 
+    this._handleFilmChange = this._handleFilmChange.bind(this);
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
   }
 
   init(films, comments) {
@@ -36,13 +40,25 @@ export default class MovieBoard {
     this._renderMovieBoard();
   }
 
+  _handleModeChange() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
+
+  _handleFilmChange(updatedFilm) {
+    this._films = updateItem(this._films, updatedFilm);
+    this._filmPresenter[updatedFilm.id].init(updatedFilm, this._comments);
+  }
+
   _renderSort() {
     render(this._movieListContainer, this._sortComponent);
   }
 
   _renderFilm(filmList, film) {
-    const filmPresenter = new FilmPresenter(filmList, this._movieListContainer);
+    const filmPresenter = new FilmPresenter(filmList, this._movieListContainer, this._handleFilmChange, this._handleModeChange);
     filmPresenter.init(film, this._comments);
+    this._filmPresenter[film.id] = filmPresenter;
   }
 
   _renderFilms(from, to, array) {
@@ -77,6 +93,15 @@ export default class MovieBoard {
     render(this._movieListComponent, this._showMoreButtonComponent);
 
     this._showMoreButtonComponent.setClickHandler(this._handleShowMoreButtonClick);
+  }
+
+  _clearFilmList() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this._filmPresenter = {};
+    this._renderedFilmsCount = FILM_COUNT_PER_STEP;
+    remove(this._showMoreButtonComponent);
   }
 
   _renderFilmList() {

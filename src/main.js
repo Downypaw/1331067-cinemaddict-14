@@ -4,7 +4,7 @@ import FilmCountView from './view/film-count.js';
 import {generateFilm} from './mock/film.js';
 import {generateFilter} from './mock/filter.js';
 import {comments} from './mock/comment.js';
-import MovieBoardPresenter from './presenter/movie-board.js'
+import MovieBoardPresenter from './presenter/movie-board.js';
 import {render} from './util/dom-util.js';
 
 const FILM_COUNT = 20;
