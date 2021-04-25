@@ -30,9 +30,11 @@ export default class Film {
   init(film, comments) {
     this._film = film;
     this._comments = comments;
+
     const prevFilmComponent = this._filmComponent;
     const prevFilmPopup = this._filmInformationPopup;
     const prevFilmControl = this._filmInformationControl;
+
     this._filmComponent = new FilmCardView(film);
     this._filmInformationPopup = new FilmInformationView(film, this._comments);
     this._filmInformationControl = new FilmInformationControl(film);
@@ -67,6 +69,8 @@ export default class Film {
 
   destroy() {
     remove(this._filmComponent);
+    remove(this._filmInformationPopup);
+    remove(this._filmInformationControl);
   }
 
   resetView() {
