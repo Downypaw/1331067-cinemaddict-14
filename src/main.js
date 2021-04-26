@@ -4,7 +4,7 @@ import FilmCountView from './view/film-count.js';
 import {generateFilm} from './mock/film.js';
 import {generateFilter} from './mock/filter.js';
 import {comments} from './mock/comment.js';
-import MovieBoardPresenter from './presenter/movie-board.js';
+import FilmBoardPresenter from './presenter/film-board.js';
 import {render} from './util/dom-util.js';
 
 const FILM_COUNT = 20;
@@ -16,12 +16,12 @@ const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const filmCountWrapper = document.querySelector('.footer__statistics');
 
-const movieBoardPresenter = new MovieBoardPresenter(siteMainElement);
+const filmBoardPresenter = new FilmBoardPresenter(siteMainElement);
 
 render(siteHeaderElement, new UserRankView(filters.find((filter) => filter.name === 'History').count));
 
 render(siteMainElement, new SiteMenuView(filters));
 
-movieBoardPresenter.init(films, comments);
+filmBoardPresenter.init(films, comments);
 
 render(filmCountWrapper, new FilmCountView(films.length));

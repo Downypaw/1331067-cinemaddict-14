@@ -1,6 +1,5 @@
 import FilmCardView from '../view/film-card.js';
 import FilmInformationView from '../view/film-information.js';
-import FilmInformationControl from '../view/film-information-control.js';
 import {render, onEscKeyDown, remove, replace} from '../util/dom-util.js';
 
 const Mode = {
@@ -37,17 +36,16 @@ export default class Film {
 
     this._filmComponent = new FilmCardView(film);
     this._filmInformationPopup = new FilmInformationView(film, this._comments);
-    this._filmInformationControl = new FilmInformationControl(film);
-    this._filmInformationPopup.getElement().querySelector('.film-details__top-container').appendChild(this._filmInformationControl.getElement());
+    this._filmInformationControl = this._filmInformationPopup.getElement().querySelector('.film-details__controls');
 
     this._filmComponent.setOpenPopupClickHandler(this._handleFilmCardClick);
     this._filmComponent.setWatchlistClickHandler(this._handleWatchlistClick);
     this._filmComponent.setWatchedClickHandler(this._handleWatchedClick);
     this._filmComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._filmInformationPopup.setClosePopupClickHandler(this._handleClosePopupClick);
-    this._filmInformationControl.setWatchlistClickHandler(this._handleWatchlistClick);
-    this._filmInformationControl.setWatchedClickHandler(this._handleWatchedClick);
-    this._filmInformationControl.setFavoriteClickHandler(this._handleFavoriteClick);
+    this._filmInformationPopup.setWatchlistClickHandler(this._handleWatchlistClick);
+    this._filmInformationPopup.setWatchedClickHandler(this._handleWatchedClick);
+    this._filmInformationPopup.setFavoriteClickHandler(this._handleFavoriteClick);
 
     if (prevFilmComponent === null) {
       render(this._filmListContainer, this._filmComponent);
@@ -58,12 +56,12 @@ export default class Film {
       replace(this._filmComponent, prevFilmComponent);
     }
 
-    if (!( prevFilmControl === null)) {
+    if ( prevFilmControl !== null) {
       replace(this._filmInformationControl, prevFilmControl);
     }
 
     remove(prevFilmComponent);
-    remove(prevFilmControl);
+    prevFilmControl.remove();
     this._filmInformationPopup = prevFilmPopup;
   }
 
