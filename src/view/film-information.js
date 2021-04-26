@@ -27,7 +27,7 @@ const createTemplate = (film, allComments) => {
   const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, duration, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
 
   const makeChecked = (value) => {
-    return value === true ? 'checked' : '';
+    return value ? 'checked' : '';
   };
 
   return `<section class="film-details">

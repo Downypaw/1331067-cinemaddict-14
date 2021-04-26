@@ -14,7 +14,7 @@ const createTemplate = (film) => {
   description = getDescription(description);
 
   const makeActive = (value) => {
-    return value === true ? 'film-card__controls-item--active' : '';
+    return value ? 'film-card__controls-item--active' : '';
   };
 
   return `<article class="film-card">

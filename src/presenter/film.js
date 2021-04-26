@@ -65,6 +65,10 @@ export default class Film {
     this._filmInformationPopup = prevFilmPopup;
   }
 
+  getFilmId() {
+    return this._film.id;
+  }
+
   destroy() {
     remove(this._filmComponent);
     remove(this._filmInformationPopup);

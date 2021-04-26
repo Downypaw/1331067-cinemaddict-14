@@ -12,8 +12,8 @@ const EXTRA_FILM_COUNT = 2;
 const filmCardId = generateId();
 
 const ExtraListTitles = {
-  TOPRATED: 'Top rated',
-  MOSTCOMMENTED: 'Most commented',
+  TOP_RATED: 'Top rated',
+  MOST_COMMENTED: 'Most commented',
 };
 
 export default class FilmBoard {
@@ -22,8 +22,8 @@ export default class FilmBoard {
     this._renderedFilmsCount = FILM_COUNT_PER_STEP;
     this._topFilmsCount = EXTRA_FILM_COUNT;
     this._filmPresenter = {};
-    this._topRatedListComponent = new ExtraListView(ExtraListTitles.TOPRATED);
-    this._mostCommentedListComponent = new ExtraListView(ExtraListTitles.MOSTCOMMENTED);
+    this._topRatedListComponent = new ExtraListView(ExtraListTitles.TOP_RATED);
+    this._mostCommentedListComponent = new ExtraListView(ExtraListTitles.MOST_COMMENTED);
     this._sortComponent = new SortView();
     this._showMoreButtonComponent = new ShowMoreButtonView();
 
@@ -51,7 +51,7 @@ export default class FilmBoard {
   }
 
   _handleFilmChange(updatedFilm) {
-    const updatedCards = Object.keys(this._filmPresenter).filter((key) => this._filmPresenter[key]._film.id === updatedFilm.id);
+    const updatedCards = Object.keys(this._filmPresenter).filter((key) => this._filmPresenter[key].getFilmId() === updatedFilm.id);
     this._films = updateItem(this._films, updatedFilm);
     updatedCards.forEach((card) => this._filmPresenter[card].init(updatedFilm, this._comments));
   }
