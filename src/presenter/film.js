@@ -19,11 +19,17 @@ export default class Film {
     this._filmInformationControl = null;
     this._mode = Mode.CARD;
 
+    this._handleEscKeydown = (evt) => {
+      onEscKeyDown(evt, this._handleClosePopupClick);
+    };
+
     this._handleFilmCardClick = this._handleFilmCardClick.bind(this);
     this._handleClosePopupClick = this._handleClosePopupClick.bind(this);
     this._handleWatchlistClick = this._handleWatchlistClick.bind(this);
     this._handleWatchedClick = this._handleWatchedClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
+    this._handleCommentSend = this._handleCommentSend.bind(this);
+    this._handleEscKeydown = this._handleEscKeydown.bind(this);
   }
 
   init(film, comments) {
@@ -57,7 +63,13 @@ export default class Film {
     }
 
     if ( prevFilmControl !== null) {
-      replace(this._filmInformationControl, prevFilmControl);
+      const currentScroll = document.querySelector('.film-details').scrollTop;
+
+      prevFilmPopup.updateData({
+        film: this._filmInformationPopup.getData().film,
+      });
+
+      document.querySelector('.film-details').scrollTo(0, currentScroll);
     }
 
     remove(prevFilmComponent);
@@ -85,18 +97,19 @@ export default class Film {
     this._changeMode();
     this._mode = Mode.POPUP;
     this._popupContainer.appendChild(this._filmInformationPopup.getElement());
-    document.addEventListener('keydown', (evt) => {
-      onEscKeyDown(evt, this._handleClosePopupClick);
-    });
+    document.addEventListener('keydown', this._handleEscKeydown);
     document.querySelector('body').classList.add('hide-overflow');
 
     this._filmInformationPopup.setClosePopupClickHandler(this._handleClosePopupClick);
+    this._filmInformationPopup.setSendCommentHandler(this._handleCommentSend);
   }
 
   _handleClosePopupClick() {
     if (this._filmInformationPopup.getElement().parentNode) {
       this._popupContainer.removeChild(this._filmInformationPopup.getElement());
       document.querySelector('body').classList.remove('hide-overflow');
+      document.removeEventListener('keydown', this._handleEscKeydown);
+      this._filmInformationPopup.removeSendCommentHandler();
     }
   }
 
@@ -108,7 +121,7 @@ export default class Film {
         {
           isWatchList: !this._film.isWatchList,
         },
-      ),
+      ), this._comments,
     );
   }
 
@@ -120,7 +133,7 @@ export default class Film {
         {
           isWatched: !this._film.isWatched,
         },
-      ),
+      ), this._comments,
     );
   }
 
@@ -132,7 +145,21 @@ export default class Film {
         {
           isFavorite: !this._film.isFavorite,
         },
-      ),
+      ), this._comments,
     );
+  }
+
+  _handleCommentSend(evt, data) {
+    if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
+      evt.preventDefault();
+      if (data.emoji === '' || data.userComment === '') {
+        throw new Error('Can`t add comment without text and emotion');
+      }
+      this._filmInformationPopup.constructor.parseStateToData(data);
+      data.film.comments.push(data.filmComments[data.filmComments.length - 1].id);
+
+      this._filmInformationPopup.reset(data.film, data.filmComments);
+      this._changeData(data.film, data.filmComments);
+    }
   }
 }

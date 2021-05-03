@@ -9,3 +9,7 @@ export const getRandomDate = () => {
 export const getReleaseDate = (year) => {
   return dayjs.between('' + year + '-01-01', '' + year + '-12-31').format('DD MMMM YYYY');
 };
+
+export const getCurrentDate = () => {
+  return dayjs().format('YYYY/MM/DD HH:mm');
+};

@@ -1,4 +1,4 @@
-import {generateId, createText, getRandomArrayElement} from '../util/common.js';
+import {createText, getRandomArrayElement, commentId} from '../util/common.js';
 import {getRandomDate} from '../util/date-time-util.js';
 import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
@@ -8,8 +8,6 @@ const EMOTIONS = [
   'puke',
   'angry',
 ];
-
-const commentId = generateId();
 
 const generateComment = () => {
   return {

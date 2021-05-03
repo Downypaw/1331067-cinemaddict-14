@@ -50,10 +50,10 @@ export default class FilmBoard {
       .forEach((presenter) => presenter.resetView());
   }
 
-  _handleFilmChange(updatedFilm) {
+  _handleFilmChange(updatedFilm, updatedComments = this._comments) {
     const updatedCards = Object.keys(this._filmPresenter).filter((key) => this._filmPresenter[key].getFilmId() === updatedFilm.id);
     this._films = updateItem(this._films, updatedFilm);
-    updatedCards.forEach((card) => this._filmPresenter[card].init(updatedFilm, this._comments));
+    updatedCards.forEach((card) => this._filmPresenter[card].init(updatedFilm, updatedComments));
   }
 
   _renderSort() {
