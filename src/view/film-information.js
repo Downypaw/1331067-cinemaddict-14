@@ -176,7 +176,7 @@ export default class FilmInformation extends SmartView  {
     this.setWatchlistClickHandler(this._callback.watchlistClick);
     this.setWatchedClickHandler(this._callback.watchedClick);
     this.setFavoriteClickHandler(this._callback.favoriteClick);
-    this.setSendCommentHandler(this._callback.sendComment);
+    this.setClosePopupClickHandler(this._callback.closePopupClick);
   }
 
   _setInnerHandlers() {
@@ -245,18 +245,24 @@ export default class FilmInformation extends SmartView  {
   }
 
   _watchlistClickHandler(evt) {
+    const currentScroll = document.querySelector('.film-details').scrollTop;
     evt.preventDefault();
     this._callback.watchlistClick();
+    document.querySelector('.film-details').scrollTo(0, currentScroll);
   }
 
   _watchedClickHandler(evt) {
+    const currentScroll = document.querySelector('.film-details').scrollTop;
     evt.preventDefault();
     this._callback.watchedClick();
+    document.querySelector('.film-details').scrollTo(0, currentScroll);
   }
 
   _favoriteClickHandler(evt) {
+    const currentScroll = document.querySelector('.film-details').scrollTop;
     evt.preventDefault();
     this._callback.favoriteClick();
+    document.querySelector('.film-details').scrollTo(0, currentScroll);
   }
 
   _sendCommentHandler(evt) {

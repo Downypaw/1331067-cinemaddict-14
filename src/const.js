@@ -34,4 +34,10 @@ const NAMES = [
   'Марго Робби',
 ];
 
-export {COMMENT_COUNT, MAX_SENTENCE_COUNT, MIN_SENTENCE_COUNT, SENTENCES, NAMES};
+const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date',
+  RATING: 'rating',
+};
+
+export {COMMENT_COUNT, MAX_SENTENCE_COUNT, MIN_SENTENCE_COUNT, SENTENCES, NAMES, SortType};

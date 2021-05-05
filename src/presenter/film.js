@@ -63,13 +63,11 @@ export default class Film {
     }
 
     if ( prevFilmControl !== null) {
-      const currentScroll = document.querySelector('.film-details').scrollTop;
-
+      replace(this._filmInformationControl, prevFilmControl);
       prevFilmPopup.updateData({
         film: this._filmInformationPopup.getData().film,
-      });
+      }, true);
 
-      document.querySelector('.film-details').scrollTo(0, currentScroll);
     }
 
     remove(prevFilmComponent);
@@ -84,7 +82,6 @@ export default class Film {
   destroy() {
     remove(this._filmComponent);
     remove(this._filmInformationPopup);
-    remove(this._filmInformationControl);
   }
 
   resetView() {
