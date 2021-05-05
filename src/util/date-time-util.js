@@ -13,3 +13,7 @@ export const getReleaseDate = (year) => {
 export const getCurrentDate = () => {
   return dayjs().format('YYYY/MM/DD HH:mm');
 };
+
+export const sortFilmsDate = (filmA, filmB) => {
+  return dayjs(filmB.releaseDate).diff(dayjs(filmA.releaseDate));
+};
