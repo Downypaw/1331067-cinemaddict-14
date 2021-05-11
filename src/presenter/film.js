@@ -157,9 +157,6 @@ export default class Film {
   _handleCommentSend(evt, data) {
     if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
       evt.preventDefault();
-      if (data.emoji === '' || data.userComment === '') {
-        throw new Error('Can`t add comment without text and emotion');
-      }
       data.film.comments.push(data.filmComments[data.filmComments.length - 1].id);
 
       this._filmInformationPopup.reset(data.film, data.filmComments);

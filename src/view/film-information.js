@@ -1,3 +1,4 @@
+import he from 'he';
 import SmartView from './smart.js';
 import {NAMES, UserAction} from '../const';
 import {getRandomArrayElement, commentId} from '../util/common.js';
@@ -15,7 +16,7 @@ const createCommentTemplate = (comments, filmComments) => {
           <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
         </span>
         <div>
-          <p class="film-details__comment-text">${comment.text}</p>
+          <p class="film-details__comment-text">${he.encode(comment.text)}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${comment.author}</span>
             <span class="film-details__comment-day">${comment.date}</span>
@@ -274,6 +275,9 @@ export default class FilmInformation extends SmartView  {
 
   _sendCommentHandler(evt) {
     const currentScroll = this.getElement().scrollTop;
+    if (this._data.emoji === '' || this._data.userComment === '') {
+      throw new Error('Can`t add comment without text and emotion');
+    }
     this._callback.sendComment(evt, FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
     this.getElement().scrollTo(0, currentScroll);
   }
