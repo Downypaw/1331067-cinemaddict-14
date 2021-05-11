@@ -20,7 +20,7 @@ const createFilterItemTemplate = (filter, currentFilterType) => {
       break;
   }
 
-  return `<a href="#${name}" class="main-navigation__item ${type === currentFilterType ? 'main-navigation__item--active' : ''}" data-filter-type = ${dataFilterType}>${name} ${counter}</a>`;
+  return `<a href="#${name}" class="main-navigation__item ${type === currentFilterType ? 'main-navigation__item--active' : ''}" data-filter-type="${dataFilterType}">${name} ${counter}</a>`;
 };
 
 const createTemplate = (filterItems, currentFilterType) => {
@@ -37,8 +37,6 @@ const createTemplate = (filterItems, currentFilterType) => {
 
 export default class SiteMenu extends AbstractView {
   constructor(filters, currentFilterType) {
-    console.log(filters);
-    console.log(currentFilterType);
     super();
     this._filters = filters;
     this._currentFilter = currentFilterType;
@@ -52,7 +50,6 @@ export default class SiteMenu extends AbstractView {
 
   _filterTypeChangeHandler(evt) {
     evt.preventDefault();
-    console.log(evt.target.dataset.filterType);
     this._callback.filterTypeChange(evt.target.dataset.filterType);
   }
 

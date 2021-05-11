@@ -1,4 +1,3 @@
-import SiteMenuView from './view/site-menu.js';
 import UserRankView from './view/user-rank.js';
 import FilmCountView from './view/film-count.js';
 import {generateFilm} from './mock/film.js';

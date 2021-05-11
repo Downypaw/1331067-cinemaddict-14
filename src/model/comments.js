@@ -22,19 +22,4 @@ export default class Comments extends Observer {
 
     this._notify(updateType, filmUpdate);
   }
-
-  // deleteComment(updateType, filmUpdate, commentUpdate) {
-  //   const index = this._comments.findIndex((comment) => comment.id === commentUpdate.id);
-  //
-  //   if (index === -1) {
-  //     throw new Error('Can\'t delete unexisting task');
-  //   }
-  //
-  //   this._comments = [
-  //     ...this._comments.slice(0, index),
-  //     ...this._comments.slice(index + 1),
-  //   ];
-  //
-  //   this._notify(updateType, filmUpdate);
-  // }
 }

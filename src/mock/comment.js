@@ -1,6 +1,6 @@
 import {createText, getRandomArrayElement, commentId} from '../util/common.js';
 import {getRandomDate} from '../util/date-time-util.js';
-import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
+import {MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
 const ALL_COMMENT_COUNT = 100;
 

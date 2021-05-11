@@ -82,8 +82,8 @@ const getCommentsKeys = () => {
   const commentsAmount = getRandomInteger(0, COMMENT_COUNT);
   while (keys.length <= commentsAmount) {
     const randomIndex = getRandomInteger(0, comments.length - 1);
-    const commentIndex = comments[randomIndex].id
-    let isRepeat = keys.some((element) => {
+    const commentIndex = comments[randomIndex].id;
+    const isRepeat = keys.some((element) => {
       return element.id === commentIndex;
     });
 

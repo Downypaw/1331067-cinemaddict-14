@@ -39,7 +39,6 @@ export default class Filter {
   }
 
   _handleFilterTypeChange(filterType) {
-    console.log(filterType);
     if (this._filterModel.getFilter() === filterType) {
       return;
     }
