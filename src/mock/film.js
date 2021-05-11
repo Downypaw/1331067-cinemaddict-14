@@ -7,7 +7,6 @@ const MAX_VALUE = 3;
 const MIN_VALUE = 1;
 const MAX_RANK = 10;
 const MIN_RANK = 0;
-
 const ORIGINAL_TITLES = [
   'The Shawshank Redemption',
   'Green Mile',
@@ -81,9 +80,16 @@ const generateDuration = () => {
 const getCommentsKeys = () => {
   const keys = [];
   const commentsAmount = getRandomInteger(0, COMMENT_COUNT);
-  for (let i = 0; i < commentsAmount; i++) {
+  while (keys.length <= commentsAmount) {
     const randomIndex = getRandomInteger(0, comments.length - 1);
-    keys.push(comments[randomIndex].id);
+    const commentIndex = comments[randomIndex].id
+    let isRepeat = keys.some((element) => {
+      return element.id === commentIndex;
+    });
+
+    if(!isRepeat) {
+      keys.push(commentIndex);
+    }
   }
   return keys;
 };

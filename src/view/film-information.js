@@ -1,5 +1,5 @@
 import SmartView from './smart.js';
-import {NAMES} from '../const';
+import {NAMES, UserAction} from '../const';
 import {getRandomArrayElement, commentId} from '../util/common.js';
 import {getCurrentDate} from '../util/date-time-util.js';
 
@@ -19,7 +19,7 @@ const createCommentTemplate = (comments, filmComments) => {
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${comment.author}</span>
             <span class="film-details__comment-day">${comment.date}</span>
-            <button class="film-details__comment-delete">Delete</button>
+            <button class="film-details__comment-delete" id="${comment.id}">Delete</button>
           </p>
         </div>
       </li>`,
@@ -154,6 +154,7 @@ export default class FilmInformation extends SmartView  {
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
     this._sendCommentHandler = this._sendCommentHandler.bind(this);
+    this._deleteCommentHandler = this._deleteCommentHandler.bind(this);
     this._setInnerHandlers();
   }
 
@@ -177,6 +178,7 @@ export default class FilmInformation extends SmartView  {
     this.setWatchedClickHandler(this._callback.watchedClick);
     this.setFavoriteClickHandler(this._callback.favoriteClick);
     this.setClosePopupClickHandler(this._callback.closePopupClick);
+    this.setDeleteClickHandler(this._callback.deleteClick);
   }
 
   _setInnerHandlers() {
@@ -213,6 +215,11 @@ export default class FilmInformation extends SmartView  {
   setSendCommentHandler(callback) {
     this._callback.sendComment = callback;
     document.addEventListener('keydown', this._sendCommentHandler);
+  }
+
+  setDeleteClickHandler(callback) {
+    this._callback.deleteClick = callback;
+    this.getElement().querySelectorAll('.film-details__comment-delete').forEach((deleteButton) => deleteButton.addEventListener('click', this._deleteCommentHandler));
   }
 
   removeSendCommentHandler() {
@@ -267,7 +274,14 @@ export default class FilmInformation extends SmartView  {
 
   _sendCommentHandler(evt) {
     const currentScroll = this.getElement().scrollTop;
-    this._callback.sendComment(evt, this._data);
+    this._callback.sendComment(evt, FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
+    this.getElement().scrollTo(0, currentScroll);
+  }
+
+  _deleteCommentHandler(evt) {
+    evt.preventDefault();
+    const currentScroll = this.getElement().scrollTop;
+    this._callback.deleteClick(FilmInformation.parseStateToData(this._data, UserAction.DELETE_COMMENT), evt.target.id);
     this.getElement().scrollTo(0, currentScroll);
   }
 
@@ -280,19 +294,24 @@ export default class FilmInformation extends SmartView  {
     };
   }
 
-  static parseStateToData(data) {
+  static parseStateToData(data, userActionType) {
     data = Object.assign({}, data);
 
-    data.filmComments.push({
-      id: commentId(),
-      text: data.userComment,
-      emotion: data.emoji,
-      author: getRandomArrayElement(NAMES),
-      date: getCurrentDate(),
-    });
-
-    delete data.emoji;
-    delete data.userComment;
+    switch(userActionType) {
+      case UserAction.ADD_COMMENT:
+        data.filmComments.push({
+          id: commentId(),
+          text: data.userComment,
+          emotion: data.emoji,
+          author: getRandomArrayElement(NAMES),
+          date: getCurrentDate(),
+        });
+        delete data.emoji;
+        delete data.userComment;
+        break;
+      case UserAction.DELEATE_COMMENT:
+        break;
+    }
     return data;
   }
 }

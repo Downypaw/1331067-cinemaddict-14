@@ -1,6 +1,7 @@
 import FilmCardView from '../view/film-card.js';
 import FilmInformationView from '../view/film-information.js';
 import {render, onEscKeyDown, remove, replace} from '../util/dom-util.js';
+import {UserAction, UpdateType} from '../const.js';
 
 const Mode = {
   CARD: 'CARD',
@@ -30,6 +31,7 @@ export default class Film {
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._handleCommentSend = this._handleCommentSend.bind(this);
     this._handleEscKeydown = this._handleEscKeydown.bind(this);
+    this._handleDeleteClick = this._handleDeleteClick.bind(this);
   }
 
   init(film, comments) {
@@ -52,6 +54,7 @@ export default class Film {
     this._filmInformationPopup.setWatchlistClickHandler(this._handleWatchlistClick);
     this._filmInformationPopup.setWatchedClickHandler(this._handleWatchedClick);
     this._filmInformationPopup.setFavoriteClickHandler(this._handleFavoriteClick);
+    this._filmInformationPopup.setDeleteClickHandler(this._handleDeleteClick);
 
     if (prevFilmComponent === null) {
       render(this._filmListContainer, this._filmComponent);
@@ -63,10 +66,9 @@ export default class Film {
     }
 
     if ( prevFilmControl !== null) {
-      replace(this._filmInformationControl, prevFilmControl);
       prevFilmPopup.updateData({
         film: this._filmInformationPopup.getData().film,
-      }, true);
+      });
 
     }
 
@@ -112,6 +114,8 @@ export default class Film {
 
   _handleWatchlistClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
@@ -124,6 +128,8 @@ export default class Film {
 
   _handleWatchedClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
@@ -136,6 +142,8 @@ export default class Film {
 
   _handleFavoriteClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
@@ -152,11 +160,20 @@ export default class Film {
       if (data.emoji === '' || data.userComment === '') {
         throw new Error('Can`t add comment without text and emotion');
       }
-      this._filmInformationPopup.constructor.parseStateToData(data);
       data.film.comments.push(data.filmComments[data.filmComments.length - 1].id);
 
       this._filmInformationPopup.reset(data.film, data.filmComments);
-      this._changeData(data.film, data.filmComments);
+      this._changeData(UserAction.ADD_COMMENT, UpdateType.MINOR, data.film, data.filmComments[data.filmComments.length - 1]);
     }
+  }
+
+  _handleDeleteClick(data, commentId) {
+    this._changeData(
+      UserAction.DELETE_COMMENT,
+      UpdateType.MINOR,
+      data.film,
+      data.filmComments[commentId - 1],
+    );
+    this._filmInformationPopup.reset(data.film, data.filmComments);
   }
 }
