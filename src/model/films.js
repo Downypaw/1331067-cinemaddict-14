@@ -29,25 +29,4 @@ export default class Films extends Observer {
 
     this._notify(updateType, update);
   }
-
-  deleteComment(updateType, filmUpdate, commentUpdate) {
-    const filmIndex = this._films.findIndex((film) => film.id === filmUpdate.id);
-    const film = this._films[filmIndex];
-    const commentIndex = film.comments.findIndex((comment) => comment === commentUpdate.id);
-    if (commentIndex === -1) {
-      throw new Error('Can\'t delete unexisting comment');
-    }
-
-    film.comments = [
-      ...film.comments.slice(0, commentIndex),
-      ...film.comments.slice(commentIndex + 1),
-    ];
-
-    filmUpdate.comments = [
-      ...filmUpdate.comments.slice(0, commentIndex),
-      ...filmUpdate.comments.slice(commentIndex + 1),
-    ];
-
-    this._notify(updateType, filmUpdate);
-  }
 }

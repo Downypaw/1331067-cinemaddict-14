@@ -90,7 +90,8 @@ export default class FilmBoard {
         this._commentsModel.addComment(updateType, filmUpdate, commentUpdate);
         break;
       case UserAction.DELETE_COMMENT:
-        this._filmsModel.deleteComment(updateType, filmUpdate, commentUpdate);
+        this._commentsModel.deleteComment(updateType, commentUpdate);
+        this._filmsModel.updateFilm(updateType, filmUpdate);
         break;
     }
   }

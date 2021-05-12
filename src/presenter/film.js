@@ -165,12 +165,20 @@ export default class Film {
   }
 
   _handleDeleteClick(data, commentId) {
+    const commentIndex = data.film.comments.findIndex((comment) => comment === Number(commentId));
+
+    data.film.comments = [
+      ...data.film.comments.slice(0, commentIndex),
+      ...data.film.comments.slice(commentIndex + 1),
+    ];
+
+    this._filmInformationPopup.reset(data.film, data.filmComments);
+
     this._changeData(
       UserAction.DELETE_COMMENT,
       UpdateType.MINOR,
       data.film,
       data.filmComments[commentId - 1],
     );
-    this._filmInformationPopup.reset(data.film, data.filmComments);
   }
 }
