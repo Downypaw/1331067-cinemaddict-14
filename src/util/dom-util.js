@@ -35,13 +35,14 @@ export const onEscKeyDown = (evt, func) => {
   if (evt.key === 'Escape' || evt.key === 'Esc') {
     evt.preventDefault();
     func();
-    // document.removeEventListener('keydown', (evt) => {
-    //   onEscKeyDown(evt, func);
-    // });
   }
 };
 
 export const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+
   if (!(component instanceof Abstract)) {
     throw new Error('Can remove only components');
   }
