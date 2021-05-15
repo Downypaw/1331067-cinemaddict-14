@@ -7,6 +7,9 @@ const MAX_VALUE = 3;
 const MIN_VALUE = 1;
 const MAX_RANK = 10;
 const MIN_RANK = 0;
+const MAX_DURATION = 240;
+const MIN_DURATION = 30;
+
 const ORIGINAL_TITLES = [
   'The Shawshank Redemption',
   'Green Mile',
@@ -67,16 +70,6 @@ const getRandomArray = (minIndex, maxIndex, array) => {
   return outputArray;
 };
 
-const generateDuration = () => {
-  if (Boolean(getRandomInteger(0, 1)) === true) {
-    const minute = getRandomInteger(0, 59);
-    const hour = getRandomInteger(1, 3);
-    return hour + 'h ' + minute + 'm';
-  }
-  const minute = getRandomInteger(30, 59);
-  return minute + 'm';
-};
-
 const getCommentsKeys = () => {
   const keys = [];
   const commentsAmount = getRandomInteger(0, COMMENT_COUNT);
@@ -109,7 +102,7 @@ export const generateFilm = () => {
     country: getRandomArrayElement(COUNTRIES),
     year: year,
     releaseDate: getReleaseDate(year),
-    duration: generateDuration(),
+    duration: getRandomInteger(MIN_DURATION, MAX_DURATION),
     description: createText(MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES),
     ageRating: getRandomArrayElement(AGE_RATINGS),
     isWatchList: Boolean(getRandomInteger(0, 1)),
