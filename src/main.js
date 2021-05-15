@@ -8,13 +8,19 @@ import FilmsModel from './model/films.js';
 import CommentsModel from './model/comments.js';
 import FilterModel from './model/filter.js';
 import {render} from './util/dom-util.js';
+import {formatDuration, formatReleaseDate, formatCommentDate} from './util/date-time-util.js';
 
 const FILM_COUNT = 20;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
+films.forEach((film) => {
+  film.duration = formatDuration(film.duration);
+  film.releaseDate = formatReleaseDate(film.releaseDate);
+});
 const filmsModel = new FilmsModel();
 filmsModel.setFilms(films);
 
+comments.forEach((comment) => comment.date = formatCommentDate(comment.date));
 const commentsModel = new CommentsModel();
 commentsModel.setComments(comments);
 
