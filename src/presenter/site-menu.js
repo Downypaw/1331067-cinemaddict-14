@@ -48,6 +48,8 @@ export default class SiteMenu {
       return;
     }
 
+    this._filterModel.setFilter(UpdateType.MAJOR, filterType);
+
     if (filterType === MenuItem.STATISTICS) {
       this._statsTab = new StatsView(this._filmsModel.getFilms());
       render(this._siteMenuContainer, this._statsTab);
@@ -58,8 +60,6 @@ export default class SiteMenu {
       this._boardTab.show();
       remove(this._statsTab);
     }
-
-    this._filterModel.setFilter(UpdateType.MAJOR, filterType);
   }
 
   _getFilters() {

@@ -132,8 +132,8 @@ export default class FilmBoard {
     }
 
     this._sortComponent = new SortView(this._currentSortType);
-    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
     render(this._filmListContainer, this._sortComponent);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderFilm(filmList, film) {

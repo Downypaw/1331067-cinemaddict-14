@@ -109,10 +109,10 @@ const createTemplate = ({films, period}, filteredFilms) => {
       <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.TODAY}" ${period === Periods.TODAY ? ' checked' : ''} name="statistic-filter" id="statistic-today" value="today">
       <label for="statistic-today" class="statistic__filters-label">Today</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.WEEK}" ${period === Periods.ALL_WEEK ? ' checked' : ''} name="statistic-filter" id="statistic-week" value="week">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.WEEK}" ${period === Periods.WEEK ? ' checked' : ''} name="statistic-filter" id="statistic-week" value="week">
       <label for="statistic-week" class="statistic__filters-label">Week</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.MONTH}" ${period === Periods.ALL_MONTH ? ' checked' : ''} name="statistic-filter" id="statistic-month" value="month">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.MONTH}" ${period === Periods.MONTH ? ' checked' : ''} name="statistic-filter" id="statistic-month" value="month">
       <label for="statistic-month" class="statistic__filters-label">Month</label>
 
       <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.YEAR}" ${period === Periods.YEAR ? ' checked' : ''} name="statistic-filter" id="statistic-year" value="year">
