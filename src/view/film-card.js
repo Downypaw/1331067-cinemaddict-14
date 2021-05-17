@@ -1,4 +1,5 @@
 import AbstractView from './abstract.js';
+import {formatDuration} from '../util/date-time-util.js';
 
 const MAX_STRING_LENGTH = 140;
 const SUBSTRING_LENGTH = 139;
@@ -8,11 +9,11 @@ const getDescription = (text) => {
 };
 
 const createTemplate = (film) => {
-  const {title, rank, year, duration, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
-  let {description} = film;
+  const {title, rank, year, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
+  let {description, duration} = film;
 
   description = getDescription(description);
-
+  duration = formatDuration(duration);
   const makeActive = (value) => {
     return value ? 'film-card__controls-item--active' : '';
   };

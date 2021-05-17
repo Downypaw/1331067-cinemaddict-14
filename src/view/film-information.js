@@ -2,7 +2,7 @@ import he from 'he';
 import SmartView from './smart.js';
 import {NAMES, UserAction} from '../const';
 import {getRandomArrayElement, commentId} from '../util/common.js';
-import {getCurrentDate} from '../util/date-time-util.js';
+import {getCurrentDate, formatDuration} from '../util/date-time-util.js';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -33,7 +33,10 @@ const createEmojiImage = (emoji) => {
 
 const createTemplate = (data) => {
   const {film, filmComments, emoji, userComment} = data;
-  const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, duration, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
+  const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
+  let {duration} = film;
+
+  duration = formatDuration(duration);
 
   const makeChecked = (value) => {
     return value ? 'checked' : '';

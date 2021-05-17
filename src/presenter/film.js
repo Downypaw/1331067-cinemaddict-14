@@ -69,7 +69,6 @@ export default class Film {
       prevFilmPopup.updateData({
         film: this._filmInformationPopup.getData().film,
       });
-
     }
 
     remove(prevFilmComponent);

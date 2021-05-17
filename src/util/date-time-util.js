@@ -1,8 +1,7 @@
+import {HOUR} from '../const.js';
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
 dayjs.extend(dayjsRandom);
-
-const HOUR = 60;
 
 export const getRandomDate = () => {
   return dayjs.between('2020-01-01', '2021-04-07');
@@ -21,7 +20,7 @@ export const sortFilmsDate = (filmA, filmB) => {
 };
 
 export const formatDuration = (min) => {
-  if (min < 60) {
+  if (min < HOUR) {
     return min + 'm';
   } else {
     const hours = Math.floor(min / HOUR);

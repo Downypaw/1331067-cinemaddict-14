@@ -1,18 +1,7 @@
 import AbstractView from './abstract.js';
 
-const getRank = (watchedFilms) => {
-  if (watchedFilms > 0 && watchedFilms <= 10) {
-    return 'Novice';
-  } else if (watchedFilms > 10 && watchedFilms <= 20){
-    return 'Fan';
-  } else {
-    return 'Movie Buff';
-  }
-};
-
-const createTemplate = (watchedFilms) => {
-  const rank = getRank(watchedFilms);
-  const rankContainer = watchedFilms > 0 ? `<p class="profile__rating">${rank}</p>` : '';
+const createTemplate = (rank) => {
+  const rankContainer = rank === 'No rank' ? '' : `<p class="profile__rating">${rank}</p>`;
 
   return `<section class="header__profile profile">
     ${rankContainer}
@@ -21,12 +10,12 @@ const createTemplate = (watchedFilms) => {
 };
 
 export default class UserRank extends AbstractView {
-  constructor(watchedFilms) {
+  constructor(userRank) {
     super();
-    this._watchedFilms = watchedFilms;
+    this._userRank = userRank;
   }
 
   getTemplate() {
-    return createTemplate(this._watchedFilms);
+    return createTemplate(this._userRank);
   }
 }

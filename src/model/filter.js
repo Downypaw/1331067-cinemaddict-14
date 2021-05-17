@@ -1,10 +1,10 @@
 import Observer from '../util/observer.js';
-import {FilterType} from '../const.js';
+import {MenuItem} from '../const.js';
 
 export default class Filter extends Observer {
   constructor() {
     super();
-    this._activeFilter = FilterType.ALL;
+    this._activeFilter = MenuItem.ALL;
   }
 
   setFilter(updateType, filter) {

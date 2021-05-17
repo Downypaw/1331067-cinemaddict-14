@@ -204,4 +204,14 @@ export default class FilmBoard {
       this._renderShowMoreButton();
     }
   }
+
+  show() {
+    this._sortComponent.show();
+    this._filmListComponent.show();
+  }
+
+  hide() {
+    this._sortComponent.hide();
+    this._filmListComponent.hide();
+  }
 }
