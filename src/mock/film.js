@@ -1,6 +1,6 @@
 import {comments} from './comment.js';
 import {generateId, createText, getRandomArrayElement, getRandomInteger} from '../util/common.js';
-import {getReleaseDate} from '../util/date-time-util.js';
+import {getReleaseDate, getRandomDate} from '../util/date-time-util.js';
 import {COMMENT_COUNT, MIN_SENTENCE_COUNT, MAX_SENTENCE_COUNT, SENTENCES, NAMES} from '../const.js';
 
 const MAX_VALUE = 3;
@@ -108,6 +108,7 @@ export const generateFilm = () => {
     isWatchList: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),
+    watchingDate: getRandomDate(),
     comments: getCommentsKeys(),
   };
 };

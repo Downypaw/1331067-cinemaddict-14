@@ -132,8 +132,8 @@ export default class FilmBoard {
     }
 
     this._sortComponent = new SortView(this._currentSortType);
-    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
     render(this._filmListContainer, this._sortComponent);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderFilm(filmList, film) {
@@ -203,5 +203,15 @@ export default class FilmBoard {
     if (filmCount > this._renderedFilmsCount) {
       this._renderShowMoreButton();
     }
+  }
+
+  show() {
+    this._sortComponent.show();
+    this._filmListComponent.show();
+  }
+
+  hide() {
+    this._sortComponent.hide();
+    this._filmListComponent.hide();
   }
 }

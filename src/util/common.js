@@ -36,3 +36,5 @@ export const getRandomArrayElement = (array) => {
 };
 
 export const commentId = generateId();
+
+export const makeItemsUniq = (items) => [...new Set(items)];

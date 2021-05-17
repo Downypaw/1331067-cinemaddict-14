@@ -1,8 +1,8 @@
-const COMMENT_COUNT = 20;
-const MAX_SENTENCE_COUNT = 5;
-const MIN_SENTENCE_COUNT = 1;
+export const COMMENT_COUNT = 20;
+export const MAX_SENTENCE_COUNT = 5;
+export const MIN_SENTENCE_COUNT = 1;
 
-const SENTENCES = [
+export const SENTENCES = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
   'Fusce tristique felis at fermentum pharetra.',
@@ -16,7 +16,7 @@ const SENTENCES = [
   'In rutrum ac purus sit amet tempus.',
 ];
 
-const NAMES = [
+export const NAMES = [
   'Кристофер Нолан',
   'Стивен Спилберг',
   'Мартин Скорсезе',
@@ -34,29 +34,43 @@ const NAMES = [
   'Марго Робби',
 ];
 
-const SortType = {
+export const SortType = {
   DEFAULT: 'default',
   DATE: 'date',
   RATING: 'rating',
 };
 
-const UserAction = {
+export const UserAction = {
   UPDATE_FILM: 'UPDATE_FILM',
   ADD_COMMENT: 'ADD_COMMENT',
   DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
-const UpdateType = {
+export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
 };
 
-const FilterType = {
+export const MenuItem = {
   ALL: 'All movies',
   WATCHLIST: 'Watchlist',
-  HISTORY: 'History',
   FAVORITES: 'Favorites',
+  HISTORY: 'History',
+  STATISTICS: 'Statistics',
 };
 
-export {COMMENT_COUNT, MAX_SENTENCE_COUNT, MIN_SENTENCE_COUNT, SENTENCES, NAMES, SortType, UserAction, UpdateType, FilterType};
+export const Tabs = {
+  FILMS: 'FILMS',
+  STATISTICS: 'STATISTICS',
+};
+
+export const Periods = {
+  ALL_TIME: 'all-time',
+  TODAY: 'day',
+  WEEK: 'week',
+  MONTH: 'month',
+  YEAR: 'year',
+};
+
+export const HOUR = 60;

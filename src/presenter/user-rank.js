@@ -1,5 +1,6 @@
 import UserRankView from '../view/user-rank.js';
 import {render, replace, remove} from '../util/dom-util.js';
+import {defineUserRank} from '../util/film.js';
 
 export default class UserRank {
   constructor(userRankContainer, filmsModel) {
@@ -17,8 +18,7 @@ export default class UserRank {
     const films = this._filmsModel.getFilms();
     const prevUserRankComponent = this._userRankComponent;
 
-    this._userRankComponent = new UserRankView(films.filter((film) => film.isWatched === true).length);
-
+    this._userRankComponent = new UserRankView(defineUserRank(films));
     if (prevUserRankComponent === null) {
       render(this._userRankContainer, this._userRankComponent);
       return;
