@@ -9,10 +9,24 @@ import CommentsModel from './model/comments.js';
 import FilterModel from './model/filter.js';
 import {render} from './util/dom-util.js';
 import {formatReleaseDate, formatCommentDate} from './util/date-time-util.js';
+import Api from './api.js';
 
 const FILM_COUNT = 20;
+const AUTHORIZATION = 'Basic kdufnsksmfpslflsm';
+const END_POINT = 'https://14.ecmascript.pages.academy/cinemaddict';
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
+
+const api = new Api(END_POINT, AUTHORIZATION);
+
+api.getFilms().then((films) => {
+  console.log(films);
+  // Есть проблема: cтруктура объекта похожа, но некоторые ключи называются иначе,
+  // а ещё на сервере используется snake_case, а у нас camelCase.
+  // Можно, конечно, переписать часть нашего клиентского приложения, но зачем?
+  // Есть вариант получше - паттерн "Адаптер"
+});
+
 films.forEach((film) => {
   film.releaseDate = formatReleaseDate(film.releaseDate);
 });
