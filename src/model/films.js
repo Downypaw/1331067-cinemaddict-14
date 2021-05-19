@@ -6,8 +6,9 @@ export default class Films extends Observer {
     this._films = [];
   }
 
-  setFilms(films) {
+  setFilms(updateType, films) {
     this._films = films.slice();
+    this._notify(updateType);
   }
 
   getFilms() {
@@ -18,7 +19,7 @@ export default class Films extends Observer {
     const index = this._films.findIndex((film) => film.id === update.id);
 
     if (index === -1) {
-      throw new Error('Can\'t update unexisting task');
+      throw new Error('Can\'t update unexisting film');
     }
 
     this._films = [
@@ -77,7 +78,7 @@ export default class Films extends Observer {
           "writers": film.screenwriters,
           "actors": film.cast,
           "release": {
-            "date": film.releaseDate.toISOString(),
+            "date": new Date(film.releaseDate).toISOString(),
             "release_country": film.country,
           },
           "runtime": film.duration,
@@ -87,30 +88,30 @@ export default class Films extends Observer {
         "user_details": {
           "watchlist": film.isWatchList,
           "already_watched": film.isWatched,
-          "watching_date": film.watchingDate.toISOString(),
+          "watching_date": new Date(film.watchingDate).toISOString(),
           "favorite": film.isFavorite,
         }
       },
     );
 
-    delete adaptedTask.year;
-    delete adaptedTask.title;
-    delete adaptedTask.originalTitle;
-    delete adaptedTask.poster;
-    delete adaptedTask.genre;
-    delete adaptedTask.rank;
-    delete adaptedTask.director;
-    delete adaptedTask.screenwriters;
-    delete adaptedTask.cast;
-    delete adaptedTask.country;
-    delete adaptedTask.releaseDate;
-    delete adaptedTask.duration;
-    delete adaptedTask.description;
-    delete adaptedTask.ageRating;
-    delete adaptedTask.isWatchList;
-    delete adaptedTask.isWatched;
-    delete adaptedTask.isFavorite;
-    delete adaptedTask.watchingDate;
+    delete adaptedFilm.year;
+    delete adaptedFilm.title;
+    delete adaptedFilm.originalTitle;
+    delete adaptedFilm.poster;
+    delete adaptedFilm.genre;
+    delete adaptedFilm.rank;
+    delete adaptedFilm.director;
+    delete adaptedFilm.screenwriters;
+    delete adaptedFilm.cast;
+    delete adaptedFilm.country;
+    delete adaptedFilm.releaseDate;
+    delete adaptedFilm.duration;
+    delete adaptedFilm.description;
+    delete adaptedFilm.ageRating;
+    delete adaptedFilm.isWatchList;
+    delete adaptedFilm.isWatched;
+    delete adaptedFilm.isFavorite;
+    delete adaptedFilm.watchingDate;
 
     return adaptedFilm;
   }

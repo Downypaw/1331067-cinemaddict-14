@@ -50,6 +50,7 @@ export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
 };
 
 export const MenuItem = {
@@ -74,3 +75,6 @@ export const Periods = {
 };
 
 export const HOUR = 60;
+
+export const AUTHORIZATION = 'Basic kdufnsksmfpslflsm';
+export const END_POINT = 'https://14.ecmascript.pages.academy/cinemaddict';

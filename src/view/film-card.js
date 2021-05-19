@@ -9,11 +9,10 @@ const getDescription = (text) => {
 };
 
 const createTemplate = (film) => {
-  const {title, rank, year, genre, poster, comments, isWatchList, isWatched, isFavorite} = film;
-  let {description, duration} = film;
+  const {title, rank, year, genre, poster, comments, duration, isWatchList, isWatched, isFavorite} = film;
+  let {description} = film;
 
   description = getDescription(description);
-  duration = formatDuration(duration);
   const makeActive = (value) => {
     return value ? 'film-card__controls-item--active' : '';
   };
@@ -23,10 +22,10 @@ const createTemplate = (film) => {
     <p class="film-card__rating">${rank}</p>
     <p class="film-card__info">
       <span class="film-card__year">${year}</span>
-      <span class="film-card__duration">${duration}</span>
+      <span class="film-card__duration">${formatDuration(duration)}</span>
       <span class="film-card__genre">${genre.join(', ')}</span>
     </p>
-    <img src="./images/posters/${poster}" alt="" class="film-card__poster">
+    <img src="./${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${description}</p>
     <a class="film-card__comments">${comments.length}</a>
     <div class="film-card__controls">

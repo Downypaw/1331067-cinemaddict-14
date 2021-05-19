@@ -56,7 +56,6 @@ export default class SiteMenu {
       this._boardTab.hide();
       this._statsTab.show();
     } else {
-      this._statsTab.hide();
       this._boardTab.show();
       remove(this._statsTab);
     }
