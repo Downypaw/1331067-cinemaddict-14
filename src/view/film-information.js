@@ -1,8 +1,9 @@
 import he from 'he';
 import SmartView from './smart.js';
 import {NAMES, UserAction} from '../const';
-import {getRandomArrayElement, commentId} from '../util/common.js';
-import {getCurrentDate, formatDuration} from '../util/date-time-util.js';
+import {getRandomArrayElement} from '../util/common.js';
+import {getCurrentDate, formatDuration, formatReleaseDate, formatCommentDate} from '../util/date-time-util.js';
+import {nanoid} from 'nanoid';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -19,7 +20,7 @@ const createCommentTemplate = (comments, filmComments) => {
           <p class="film-details__comment-text">${he.encode(comment.text)}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${comment.author}</span>
-            <span class="film-details__comment-day">${comment.date}</span>
+            <span class="film-details__comment-day">${formatCommentDate(comment.date)}</span>
             <button class="film-details__comment-delete" id="${comment.id}">Delete</button>
           </p>
         </div>
@@ -33,10 +34,7 @@ const createEmojiImage = (emoji) => {
 
 const createTemplate = (data) => {
   const {film, filmComments, emoji, userComment} = data;
-  const {title, originalTitle, rank, director, screenwriters, cast, releaseDate, country, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
-  let {duration} = film;
-
-  duration = formatDuration(duration);
+  const {title, originalTitle, rank, director, screenwriters, cast, country, duration, releaseDate, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
 
   const makeChecked = (value) => {
     return value ? 'checked' : '';
@@ -50,8 +48,8 @@ const createTemplate = (data) => {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
-            <p class="film-details__age">${ageRating}</p>
+            <img class="film-details__poster-img" src="./${poster}" alt="">
+            <p class="film-details__age">${ageRating}+</p>
           </div>
           <div class="film-details__info">
             <div class="film-details__info-head">
@@ -78,11 +76,11 @@ const createTemplate = (data) => {
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Release Date</td>
-                <td class="film-details__cell">${releaseDate}</td>
+                <td class="film-details__cell">${formatReleaseDate(releaseDate)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${duration}</td>
+                <td class="film-details__cell">${formatDuration(duration)}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
@@ -277,12 +275,14 @@ export default class FilmInformation extends SmartView  {
   }
 
   _sendCommentHandler(evt) {
-    const currentScroll = this.getElement().scrollTop;
-    if (this._data.emoji === '' || this._data.userComment === '') {
-      throw new Error('Can`t add comment without text and emotion');
+    if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
+      const currentScroll = this.getElement().scrollTop;
+      if (this._data.emoji === '' || this._data.userComment === '') {
+        throw new Error('Can`t add comment without text and emotion');
+      }
+      this._callback.sendComment(evt, this._data);
+      this.getElement().scrollTo(0, currentScroll);
     }
-    this._callback.sendComment(evt, FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
-    this.getElement().scrollTo(0, currentScroll);
   }
 
   _deleteCommentHandler(evt) {
@@ -307,7 +307,7 @@ export default class FilmInformation extends SmartView  {
     switch(userActionType) {
       case UserAction.ADD_COMMENT:
         data.filmComments.push({
-          id: commentId(),
+          id: nanoid(),
           text: data.userComment,
           emotion: data.emoji,
           author: getRandomArrayElement(NAMES),
