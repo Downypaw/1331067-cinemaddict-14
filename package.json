@@ -24,6 +24,8 @@
     "chartjs-plugin-datalabels": "0.7.0",
     "dayjs": "1.9.5",
     "dayjs-random": "1.0.0",
-    "he": "1.2.0"
+    "he": "1.2.0",
+    "nanoid": "3.1.23",
+    "noty": "3.2.0-beta-deprecated"
   }
 }

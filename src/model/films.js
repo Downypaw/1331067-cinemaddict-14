@@ -68,29 +68,29 @@ export default class Films extends Observer {
       {},
       film,
       {
-        "film_info": {
-          "title": film.title,
-          "alternative_title": film.originalTitle,
-          "total_rating": film.rank,
-          "poster": film.poster,
-          "age_rating": film.ageRating,
-          "director": film.director,
-          "writers": film.screenwriters,
-          "actors": film.cast,
-          "release": {
-            "date": new Date(film.releaseDate).toISOString(),
-            "release_country": film.country,
+        'film_info': {
+          'title': film.title,
+          'alternative_title': film.originalTitle,
+          'total_rating': film.rank,
+          'poster': film.poster,
+          'age_rating': film.ageRating,
+          'director': film.director,
+          'writers': film.screenwriters,
+          'actors': film.cast,
+          'release': {
+            'date': new Date(film.releaseDate).toISOString(),
+            'release_country': film.country,
           },
-          "runtime": film.duration,
-          "genre": film.genre,
-          "description": film.description,
+          'runtime': film.duration,
+          'genre': film.genre,
+          'description': film.description,
         },
-        "user_details": {
-          "watchlist": film.isWatchList,
-          "already_watched": film.isWatched,
-          "watching_date": new Date(film.watchingDate).toISOString(),
-          "favorite": film.isFavorite,
-        }
+        'user_details': {
+          'watchlist': film.isWatchList,
+          'already_watched': film.isWatched,
+          'watching_date': new Date(film.watchingDate).toISOString(),
+          'favorite': film.isFavorite,
+        },
       },
     );
 

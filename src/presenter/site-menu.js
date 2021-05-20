@@ -26,7 +26,6 @@ export default class SiteMenu {
     const prevSiteMenuComponent = this._siteMenuComponent;
     this._siteMenuComponent = new SiteMenuView(filters, this._filterModel.getFilter());
     this._filterComponent = this._siteMenuComponent.getElement().querySelector('.main-navigation__items');
-    // this._siteMenuComponent.setStatisticClickHandler(this._handleStatisticClick);
     this._siteMenuComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);
 
     if (prevSiteMenuComponent === null) {

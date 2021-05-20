@@ -56,8 +56,8 @@ export default class Comments extends Observer {
       {},
       comment,
       {
-        "comment": comment.text,
-        "date": comment.date.toISOString,
+        'comment': comment.text,
+        'date': comment.date.toISOString,
       },
     );
 

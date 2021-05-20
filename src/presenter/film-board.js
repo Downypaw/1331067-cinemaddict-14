@@ -9,6 +9,7 @@ import {sortFilmsDate} from '../util/date-time-util.js';
 import {sortFilmsRank, sortFilmsCommentsAmount} from '../util/film.js';
 import {generateId} from '../util/common.js';
 import {filter} from '../util/filter.js';
+import {getUpdateError} from '../util/error.js';
 import FilmPresenter from './film.js';
 import {SortType, UpdateType, UserAction} from '../const.js';
 
@@ -22,7 +23,8 @@ const ExtraListTitles = {
 };
 
 export default class FilmBoard {
-  constructor(filmListContainer, filmsModel, commentsModel, filterModel, api) {
+  constructor(bodyElement, filmListContainer, filmsModel, commentsModel, filterModel, api) {
+    this._bodyElement = bodyElement;
     this._filmsModel = filmsModel;
     this._commentsModel = commentsModel;
     this._filterModel = filterModel;
@@ -91,9 +93,11 @@ export default class FilmBoard {
   _handleViewAction(actionType, updateType, filmUpdate, commentUpdate) {
     switch (actionType) {
       case UserAction.UPDATE_FILM:
-        this._api.updateFilm(filmUpdate).then((response) => {
-          this._filmsModel.updateFilm(updateType, response);
-        });
+        this._api.updateFilm(filmUpdate)
+          .then((response) => {
+            this._filmsModel.updateFilm(updateType, response);
+          })
+          .catch(getUpdateError());
         break;
       case UserAction.ADD_COMMENT:
         this._commentsModel.addComment(updateType, filmUpdate, commentUpdate);
@@ -111,7 +115,8 @@ export default class FilmBoard {
         this._updateBoard(data);
         break;
       case UpdateType.MINOR:
-        this._updateBoard(data, {resetFilter: true});
+        this._clearBoard();
+        this._renderFilmBoard();
         break;
       case UpdateType.MAJOR:
         this._clearBoard(true);
@@ -155,7 +160,7 @@ export default class FilmBoard {
   }
 
   _renderFilm(filmList, film) {
-    const filmPresenter = new FilmPresenter(filmList, this._filmListContainer, this._commentsModel, this._handleViewAction, this._handleModeChange);
+    const filmPresenter = new FilmPresenter(filmList, this._bodyElement, this._commentsModel, this._handleViewAction, this._handleModeChange, this._api);
     filmPresenter.init(film);
     this._filmPresenter[filmCardId()] = filmPresenter;
   }

@@ -20,7 +20,7 @@ export default class Api {
   getFilms() {
     return this._load({url: 'movies'})
       .then(Api.toJSON)
-      .then((films) => films.map(FilmsModel.adaptToClient));;
+      .then((films) => films.map(FilmsModel.adaptToClient));
   }
 
   getComments(filmId) {
@@ -37,7 +37,7 @@ export default class Api {
       headers: new Headers({'Content-Type': 'application/json'}),
     })
       .then(Api.toJSON)
-      .then(FilmsModel.adaptToClient);;
+      .then(FilmsModel.adaptToClient);
   }
 
   _load({

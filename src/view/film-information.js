@@ -1,8 +1,9 @@
 import he from 'he';
 import SmartView from './smart.js';
 import {NAMES, UserAction} from '../const';
-import {getRandomArrayElement, commentId} from '../util/common.js';
+import {getRandomArrayElement} from '../util/common.js';
 import {getCurrentDate, formatDuration, formatReleaseDate, formatCommentDate} from '../util/date-time-util.js';
+import {nanoid} from 'nanoid';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -275,12 +276,11 @@ export default class FilmInformation extends SmartView  {
 
   _sendCommentHandler(evt) {
     if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
-      console.log(this._data);
       const currentScroll = this.getElement().scrollTop;
-      this._callback.sendComment(evt, FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
-      // if (this._data.emoji === '' || this._data.userComment === '') {
-      //   throw new Error('Can`t add comment without text and emotion');
-      // }
+      if (this._data.emoji === '' || this._data.userComment === '') {
+        throw new Error('Can`t add comment without text and emotion');
+      }
+      this._callback.sendComment(evt, this._data);
       this.getElement().scrollTo(0, currentScroll);
     }
   }
@@ -307,7 +307,7 @@ export default class FilmInformation extends SmartView  {
     switch(userActionType) {
       case UserAction.ADD_COMMENT:
         data.filmComments.push({
-          id: commentId(),
+          id: nanoid(),
           text: data.userComment,
           emotion: data.emoji,
           author: getRandomArrayElement(NAMES),
