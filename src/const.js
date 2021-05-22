@@ -78,3 +78,9 @@ export const HOUR = 60;
 
 export const AUTHORIZATION = 'Basic kdufnsksmfpslflsm';
 export const END_POINT = 'https://14.ecmascript.pages.academy/cinemaddict';
+
+export const State = {
+  SAVING: 'Saving',
+  DELETING: 'Deleting',
+  ABORTING: 'Aborting',
+};
