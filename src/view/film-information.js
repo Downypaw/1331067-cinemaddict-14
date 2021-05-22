@@ -1,15 +1,13 @@
 import he from 'he';
 import SmartView from './smart.js';
-import {NAMES, UserAction} from '../const';
-import {getRandomArrayElement} from '../util/common.js';
-import {getCurrentDate, formatDuration, formatReleaseDate, formatCommentDate} from '../util/date-time-util.js';
-import {nanoid} from 'nanoid';
+import {UserAction} from '../const';
+import {formatDuration, formatReleaseDate, formatCommentDate} from '../util/date-time-util.js';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
 };
 
-const createCommentTemplate = (comments, filmComments) => {
+const createCommentTemplate = (comments, filmComments, isDisabled, deletingCommentId) => {
   return `${comments.map((commentKey) => filmComments.find((item) => item.id === commentKey))
     .map((comment) =>
       `<li class="film-details__comment">
@@ -21,7 +19,7 @@ const createCommentTemplate = (comments, filmComments) => {
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${comment.author}</span>
             <span class="film-details__comment-day">${formatCommentDate(comment.date)}</span>
-            <button class="film-details__comment-delete" id="${comment.id}">Delete</button>
+            <button class="film-details__comment-delete" id="${comment.id}" ${isDisabled ? 'disabled' : ''}>${deletingCommentId === comment.id ? 'Deleting...' : 'Delete'}</button>
           </p>
         </div>
       </li>`,
@@ -33,9 +31,8 @@ const createEmojiImage = (emoji) => {
 };
 
 const createTemplate = (data) => {
-  const {film, filmComments, emoji, userComment} = data;
+  const {film, filmComments, emoji, userComment, isDisabled, deletingCommentId} = data;
   const {title, originalTitle, rank, director, screenwriters, cast, country, duration, releaseDate, genre, poster, description, comments, ageRating, isWatchList, isWatched, isFavorite} = film;
-
   const makeChecked = (value) => {
     return value ? 'checked' : '';
   };
@@ -109,7 +106,7 @@ const createTemplate = (data) => {
         <section class="film-details__comments-wrap">
           <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
           <ul class="film-details__comments-list">
-            ${createCommentTemplate(comments, filmComments)}
+            ${createCommentTemplate(comments, filmComments, isDisabled, deletingCommentId)}
           </ul>
           <div class="film-details__new-comment">
             <div class="film-details__add-emoji-label">${createEmojiImage(emoji)}</div>
@@ -276,19 +273,22 @@ export default class FilmInformation extends SmartView  {
 
   _sendCommentHandler(evt) {
     if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
-      const currentScroll = this.getElement().scrollTop;
-      if (this._data.emoji === '' || this._data.userComment === '') {
-        throw new Error('Can`t add comment without text and emotion');
+      if (this._data.isDisabled) {
+        return;
       }
-      this._callback.sendComment(evt, this._data);
-      this.getElement().scrollTo(0, currentScroll);
+
+      if (this._data.userComment === '' || this._data.emoji === '') {
+        return;
+      }
+
+      this._callback.sendComment(FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
     }
   }
 
   _deleteCommentHandler(evt) {
     evt.preventDefault();
     const currentScroll = this.getElement().scrollTop;
-    this._callback.deleteClick(FilmInformation.parseStateToData(this._data, UserAction.DELETE_COMMENT), evt.target.id);
+    this._callback.deleteClick(evt.target.id);
     this.getElement().scrollTo(0, currentScroll);
   }
 
@@ -298,6 +298,8 @@ export default class FilmInformation extends SmartView  {
       filmComments: filmCommentsData.slice(),
       emoji: '',
       userComment: '',
+      isDisabled: false,
+      deletingCommentId: '',
     };
   }
 
@@ -307,11 +309,11 @@ export default class FilmInformation extends SmartView  {
     switch(userActionType) {
       case UserAction.ADD_COMMENT:
         data.filmComments.push({
-          id: nanoid(),
+          filmId: data.film.id,
           text: data.userComment,
           emotion: data.emoji,
-          author: getRandomArrayElement(NAMES),
-          date: getCurrentDate(),
+          // author: getRandomArrayElement(NAMES),
+          // date: getCurrentDate(),
         });
         delete data.emoji;
         delete data.userComment;

@@ -47,7 +47,6 @@ export default class Comments extends Observer {
     );
 
     delete adaptedComment.comment;
-
     return adaptedComment;
   }
 
@@ -57,7 +56,6 @@ export default class Comments extends Observer {
       comment,
       {
         'comment': comment.text,
-        'date': comment.date.toISOString,
       },
     );
 

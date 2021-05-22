@@ -90,7 +90,7 @@ export default class FilmBoard {
       .forEach((presenter) => presenter.resetView());
   }
 
-  _handleViewAction(actionType, updateType, filmUpdate, commentUpdate) {
+  _handleViewAction(actionType, updateType, filmUpdate) {
     switch (actionType) {
       case UserAction.UPDATE_FILM:
         this._api.updateFilm(filmUpdate)
@@ -100,11 +100,13 @@ export default class FilmBoard {
           .catch(getUpdateError());
         break;
       case UserAction.ADD_COMMENT:
-        this._commentsModel.addComment(updateType, filmUpdate, commentUpdate);
-        break;
-      case UserAction.DELETE_COMMENT:
-        this._commentsModel.deleteComment(updateType, commentUpdate);
-        this._filmsModel.updateFilm(updateType, filmUpdate);
+        this._api.updateFilm(filmUpdate)
+          .then((response) => {
+            this._filmsModel.updateFilm(updateType, response);
+          })
+          .catch(() => {
+            this._filmPresenter[filmUpdate.id].setAborting();
+          });
         break;
     }
   }
@@ -160,7 +162,7 @@ export default class FilmBoard {
   }
 
   _renderFilm(filmList, film) {
-    const filmPresenter = new FilmPresenter(filmList, this._bodyElement, this._commentsModel, this._handleViewAction, this._handleModeChange, this._api);
+    const filmPresenter = new FilmPresenter(filmList, this._bodyElement, this._commentsModel, this._handleViewAction, this._handleModeChange, this._api, this._filmsModel);
     filmPresenter.init(film);
     this._filmPresenter[filmCardId()] = filmPresenter;
   }
