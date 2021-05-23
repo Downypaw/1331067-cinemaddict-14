@@ -1,6 +1,5 @@
 import FilmsModel from '../model/films.js';
 import {isOnline} from '../util/common.js';
-import {toast} from '../util/toast.js';
 
 const getSyncedFilms = (items) => {
   return items.filter(({success}) => success)
@@ -80,11 +79,7 @@ export default class Provider {
 
       return this._api.sync(storeFilms)
         .then((response) => {
-          // Забираем из ответа синхронизированные задачи
           const updatedFilms = getSyncedFilms(response.updated);
-
-          // Добавляем синхронизированные задачи в хранилище.
-          // Хранилище должно быть актуальным в любой момент.
           const items = createStoreStructure(updatedFilms);
 
           this._store.setItems(items);

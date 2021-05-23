@@ -5,8 +5,6 @@ import SiteMenuPresenter from './presenter/site-menu.js';
 import FilmsModel from './model/films.js';
 import CommentsModel from './model/comments.js';
 import FilterModel from './model/filter.js';
-import {isOnline} from './util/common.js';
-import {toast} from './util/toast.js';
 import {render} from './util/dom-util.js';
 import Api from './api/api.js';
 import Store from './api/store.js';

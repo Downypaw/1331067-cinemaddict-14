@@ -100,7 +100,6 @@ export default class Film {
 
     if ( prevFilmPopup !== null) {
       const currentScroll = prevFilmPopup.getElement().scrollTop;
-      // console.log(currentScroll);
       replace(this._filmInformationPopup, prevFilmPopup);
       this._filmInformationPopup.getElement().scrollTo(0, currentScroll);
     }
@@ -266,9 +265,9 @@ export default class Film {
   _handleCommentSend(data) {
 
     if (!isOnline()) {
-     toast('You can\'t send comment offline');
-     return;
-   }
+      toast('You can\'t send comment offline');
+      return;
+    }
 
     this._setViewState(State.SAVING);
 
