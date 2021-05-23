@@ -2,6 +2,8 @@ import FilmCardView from '../view/film-card.js';
 import FilmInformationView from '../view/film-information.js';
 import {render, onEscKeyDown, remove, replace} from '../util/dom-util.js';
 import {UserAction, UpdateType, State} from '../const.js';
+import {isOnline} from '../util/common.js';
+import {toast} from '../util/toast.js';
 
 const Mode = {
   CARD: 'CARD',
@@ -262,6 +264,12 @@ export default class Film {
   }
 
   _handleCommentSend(data) {
+
+    if (!isOnline()) {
+     toast('You can\'t send comment offline');
+     return;
+   }
+
     this._setViewState(State.SAVING);
 
     this._api.addComment(data.filmComments[data.filmComments.length - 1])
@@ -282,6 +290,11 @@ export default class Film {
   }
 
   _handleDeleteClick(commentId) {
+    if (!isOnline()) {
+      toast('You can\'t delete comment offline');
+      return;
+    }
+
     this._setViewState(State.DELETING, commentId);
 
     this._api.deleteComment(commentId)

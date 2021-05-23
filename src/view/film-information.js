@@ -278,10 +278,19 @@ export default class FilmInformation extends SmartView  {
       }
 
       if (this._data.userComment === '' || this._data.emoji === '') {
+        throw new Error('Can`t add comment without text and emotion');
         return;
       }
+      const currentScroll = this.getElement().scrollTop;
+      const update = FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT);
 
-      this._callback.sendComment(FilmInformation.parseStateToData(this._data, UserAction.ADD_COMMENT));
+      this.reset(this._data.film, this._data.filmComments);
+
+      console.log(this._data);
+
+      this._callback.sendComment(update, UserAction.ADD_COMMENT);
+      this.getElement().scrollTo(0, currentScroll);
+      // this.reset(this._data.film, this._data.filmComments);
     }
   }
 
