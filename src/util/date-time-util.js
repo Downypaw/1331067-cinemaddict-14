@@ -1,7 +1,7 @@
 import {HOUR} from '../const.js';
 import dayjs from 'dayjs';
-import dayjsRandom from 'dayjs-random';
-dayjs.extend(dayjsRandom);
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 export const getRandomDate = () => {
   return dayjs.between('2020-01-01', '2021-04-07');
@@ -35,4 +35,8 @@ export const formatReleaseDate = (releaseDate) => {
 
 export const formatCommentDate = (commentDate) => {
   return dayjs(commentDate).format('YYYY/MM/DD HH:mm');
+};
+
+export const humanize = (date) => {
+  return dayjs(date).fromNow();
 };

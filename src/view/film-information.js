@@ -1,7 +1,7 @@
 import he from 'he';
 import SmartView from './smart.js';
 import {UserAction} from '../const';
-import {formatDuration, formatReleaseDate, formatCommentDate} from '../util/date-time-util.js';
+import {formatDuration, formatReleaseDate, humanize} from '../util/date-time-util.js';
 
 const createGenreTemplate = (genre) => {
   return `${genre.map((genreTemplate) => `<span class="film-details__genre">${genreTemplate}</span>`).join('')}`;
@@ -18,7 +18,7 @@ const createCommentTemplate = (comments, filmComments, isDisabled, deletingComme
           <p class="film-details__comment-text">${he.encode(comment.text)}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${comment.author}</span>
-            <span class="film-details__comment-day">${formatCommentDate(comment.date)}</span>
+            <span class="film-details__comment-day">${humanize(comment.date)}</span>
             <button class="film-details__comment-delete" id="${comment.id}" ${isDisabled ? 'disabled' : ''}>${deletingCommentId === comment.id ? 'Deleting...' : 'Delete'}</button>
           </p>
         </div>
