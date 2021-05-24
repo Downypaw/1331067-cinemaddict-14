@@ -234,12 +234,17 @@ export default class FilmBoard {
     render(this._filmListComponent, this._topRatedListComponent);
     render(this._filmListComponent, this._mostCommentedListComponent);
     const allFilms = this._getFilms().slice(0, Math.min(filmCount, FILM_COUNT_PER_STEP));
-    const topRatedFilms = this._getFilms().slice().sort(sortFilmsRank).slice(0, this._topFilmsCount);
-    const mostCommentedFilms = this._getFilms().slice().sort(sortFilmsCommentsAmount).slice(0, this._topFilmsCount);
+    const topRatedFilms = this._getFilms().filter((film) => film.rank !== 0).slice().sort(sortFilmsRank).slice(0, this._topFilmsCount);
+    const mostCommentedFilms = this._getFilms().filter((film) => film.comments.length !== 0).slice().sort(sortFilmsCommentsAmount).slice(0, this._topFilmsCount);
     if (filmCount > 0) {
       this._renderFilms(allFilms.slice(0, Math.min(filmCount, this._renderedFilmsCount)), this._allFilmsContainer);
-      this._renderFilms(topRatedFilms, this._topRatedContainer);
-      this._renderFilms(mostCommentedFilms, this._mostCommentedContainer);
+      if (this._getFilms().some((film) => film.rank !== 0)) {
+        this._renderFilms(topRatedFilms, this._topRatedContainer);
+      }
+
+      if (this._getFilms().some((film) => film.comments.length !== 0)) {
+        this._renderFilms(mostCommentedFilms, this._mostCommentedContainer);
+      }
     }
 
     if (filmCount > this._renderedFilmsCount) {
