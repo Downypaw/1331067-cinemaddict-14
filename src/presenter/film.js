@@ -106,17 +106,6 @@ export default class Film {
     remove(prevFilmPopup);
   }
 
-  _handleModelEvent() {
-    if (this._mode === Mode.POPUP) {
-      this._api.getComments(this._film.id)
-        .then((comments) => {
-          this._updateFilm();
-          this._commentsModel.setComments(comments);
-          this._renderFilmInformationPopup(comments);
-        });
-    }
-  }
-
   _updateFilm() {
     this._film = this._filmsModel.getFilms().find((film) => film.id === this._film.id);
   }
@@ -162,6 +151,17 @@ export default class Film {
     }
     if (this._filmCardComponent) {
       this._filmCardComponent.shake();
+    }
+  }
+
+  _handleModelEvent() {
+    if (this._mode === Mode.POPUP) {
+      this._api.getComments(this._film.id)
+        .then((comments) => {
+          this._updateFilm();
+          this._commentsModel.setComments(comments);
+          this._renderFilmInformationPopup(comments);
+        });
     }
   }
 

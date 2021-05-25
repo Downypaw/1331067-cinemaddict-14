@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
-import {Periods} from '../const.js';
+import {Period} from '../const.js';
 
 export const filterWatchedFilms = ({films, period}) => {
-  if (period === Periods.ALL_TIME) {
+  if (period === Period.ALL_TIME) {
     return films;
   }
 

@@ -61,12 +61,7 @@ export const MenuItem = {
   STATISTICS: 'Statistics',
 };
 
-export const Tabs = {
-  FILMS: 'FILMS',
-  STATISTICS: 'STATISTICS',
-};
-
-export const Periods = {
+export const Period = {
   ALL_TIME: 'all-time',
   TODAY: 'day',
   WEEK: 'week',
@@ -83,4 +78,9 @@ export const State = {
   SAVING: 'Saving',
   DELETING: 'Deleting',
   ABORTING: 'Aborting',
+};
+
+export const StoreElement = {
+  FILMS: 'films',
+  COMMENTS: 'comments',
 };

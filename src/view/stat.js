@@ -4,7 +4,7 @@ import SmartView from './smart.js';
 import {defineUserRank} from '../util/film.js';
 import {makeItemsUniq} from '../util/common.js';
 import {filterWatchedFilms} from '../util/stat.js';
-import {Periods, HOUR} from '../const.js';
+import {Period, HOUR} from '../const.js';
 
 const BAR_HEIGHT = 50;
 
@@ -103,19 +103,19 @@ const createTemplate = ({films, period}, filteredFilms) => {
     <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
       <p class="statistic__filters-description">Show stats:</p>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.ALL_TIME}" ${period === Periods.ALL_TIME ? ' checked' : ''} name="statistic-filter" id="statistic-all-time" value="all-time">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Period.ALL_TIME}" ${period === Period.ALL_TIME ? ' checked' : ''} name="statistic-filter" id="statistic-all-time" value="all-time">
       <label for="statistic-all-time" class="statistic__filters-label">All time</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.TODAY}" ${period === Periods.TODAY ? ' checked' : ''} name="statistic-filter" id="statistic-today" value="today">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Period.TODAY}" ${period === Period.TODAY ? ' checked' : ''} name="statistic-filter" id="statistic-today" value="today">
       <label for="statistic-today" class="statistic__filters-label">Today</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.WEEK}" ${period === Periods.WEEK ? ' checked' : ''} name="statistic-filter" id="statistic-week" value="week">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Period.WEEK}" ${period === Period.WEEK ? ' checked' : ''} name="statistic-filter" id="statistic-week" value="week">
       <label for="statistic-week" class="statistic__filters-label">Week</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.MONTH}" ${period === Periods.MONTH ? ' checked' : ''} name="statistic-filter" id="statistic-month" value="month">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Period.MONTH}" ${period === Period.MONTH ? ' checked' : ''} name="statistic-filter" id="statistic-month" value="month">
       <label for="statistic-month" class="statistic__filters-label">Month</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" value="${Periods.YEAR}" ${period === Periods.YEAR ? ' checked' : ''} name="statistic-filter" id="statistic-year" value="year">
+      <input type="radio" class="statistic__filters-input visually-hidden" value="${Period.YEAR}" ${period === Period.YEAR ? ' checked' : ''} name="statistic-filter" id="statistic-year" value="year">
       <label for="statistic-year" class="statistic__filters-label">Year</label>
     </form>
 
@@ -148,7 +148,7 @@ export default class Stats extends SmartView {
 
     this._data = {
       films: this._films,
-      period: Periods.ALL_TIME,
+      period: Period.ALL_TIME,
     };
 
     this._chart = null;
@@ -159,14 +159,6 @@ export default class Stats extends SmartView {
     this._setPeriodChangeHandler();
   }
 
-  removeElement() {
-    super.removeElement();
-
-    if(this._chart !== null) {
-      this._chart = null;
-    }
-  }
-
   getTemplate() {
     return createTemplate(this._data, this._getWatchedFilms());
   }
@@ -175,19 +167,17 @@ export default class Stats extends SmartView {
     return filterWatchedFilms(this._data);
   }
 
+  removeElement() {
+    super.removeElement();
+
+    if(this._chart !== null) {
+      this._chart = null;
+    }
+  }
+
   restoreHandlers() {
     this._setCharts();
     this._setPeriodChangeHandler();
-  }
-
-  _periodChangeHandler(evt) {
-    this.updateData({
-      period: evt.target.value,
-    });
-  }
-
-  _setPeriodChangeHandler() {
-    this.getElement().querySelector('.statistic__filters').addEventListener('change', this._periodChangeHandler);
   }
 
   _setCharts() {
@@ -197,5 +187,15 @@ export default class Stats extends SmartView {
 
     const statisticCtx = this.getElement().querySelector('.statistic__chart');
     this._chart = renderChart(statisticCtx, this._getWatchedFilms());
+  }
+
+  _setPeriodChangeHandler() {
+    this.getElement().querySelector('.statistic__filters').addEventListener('change', this._periodChangeHandler);
+  }
+
+  _periodChangeHandler(evt) {
+    this.updateData({
+      period: evt.target.value,
+    });
   }
 }

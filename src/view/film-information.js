@@ -157,18 +157,22 @@ export default class FilmInformation extends SmartView  {
     this._setInnerHandlers();
   }
 
-  reset(film, comments) {
-    this.updateData(
-      FilmInformation.parseDataToState(film, comments),
-    );
-  }
-
   getTemplate() {
     return createTemplate(this._data);
   }
 
   getData() {
     return this._data;
+  }
+
+  reset(film, comments) {
+    this.updateData(
+      FilmInformation.parseDataToState(film, comments),
+    );
+  }
+
+  removeSendCommentHandler() {
+    document.removeEventListener('keydown', this._sendCommentHandler);
   }
 
   restoreHandlers() {
@@ -219,10 +223,6 @@ export default class FilmInformation extends SmartView  {
   setDeleteClickHandler(callback) {
     this._callback.deleteClick = callback;
     this.getElement().querySelectorAll('.film-details__comment-delete').forEach((deleteButton) => deleteButton.addEventListener('click', this._deleteCommentHandler));
-  }
-
-  removeSendCommentHandler() {
-    document.removeEventListener('keydown', this._sendCommentHandler);
   }
 
   _emojiClickHandler(evt) {

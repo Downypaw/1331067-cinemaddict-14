@@ -6,6 +6,7 @@ import FilmsModel from './model/films.js';
 import CommentsModel from './model/comments.js';
 import FilterModel from './model/filter.js';
 import {render} from './util/dom-util.js';
+import {toast} from './util/toast.js';
 import Api from './api/api.js';
 import Store from './api/store.js';
 import Provider from './api/provider.js';
@@ -57,4 +58,5 @@ window.addEventListener('online', () => {
 
 window.addEventListener('offline', () => {
   document.title += ' [offline]';
+  toast('Check your connection');
 });

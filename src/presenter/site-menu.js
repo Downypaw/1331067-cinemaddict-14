@@ -38,28 +38,6 @@ export default class SiteMenu {
     }
   }
 
-  _handleModelEvent() {
-    this.init();
-  }
-
-  _handleFilterTypeChange(filterType) {
-    if (this._filterModel.getFilter() === filterType) {
-      return;
-    }
-
-    this._filterModel.setFilter(UpdateType.MAJOR, filterType);
-
-    if (filterType === MenuItem.STATISTICS) {
-      this._statsTab = new StatsView(this._filmsModel.getFilms());
-      render(this._siteMenuContainer, this._statsTab);
-      this._boardTab.hide();
-      this._statsTab.show();
-    } else {
-      this._boardTab.show();
-      remove(this._statsTab);
-    }
-  }
-
   _getFilters() {
     const films = this._filmsModel.getFilms();
 
@@ -85,5 +63,27 @@ export default class SiteMenu {
         count: filter[MenuItem.FAVORITES](films).length,
       },
     ];
+  }
+
+  _handleModelEvent() {
+    this.init();
+  }
+
+  _handleFilterTypeChange(filterType) {
+    if (this._filterModel.getFilter() === filterType) {
+      return;
+    }
+
+    this._filterModel.setFilter(UpdateType.MAJOR, filterType);
+
+    if (filterType === MenuItem.STATISTICS) {
+      this._statsTab = new StatsView(this._filmsModel.getFilms());
+      render(this._siteMenuContainer, this._statsTab);
+      this._boardTab.hide();
+      this._statsTab.show();
+    } else {
+      this._boardTab.show();
+      remove(this._statsTab);
+    }
   }
 }

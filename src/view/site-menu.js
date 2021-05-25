@@ -49,14 +49,6 @@ export default class SiteMenu extends AbstractView {
     return createTemplate(this._filters, this._currentFilter);
   }
 
-  _filterTypeChangeHandler(evt) {
-    if (evt.target.closest('a')) {
-      this._callback.filterTypeChange(evt.target.closest('a').dataset.filterType);
-      evt.preventDefault();
-      this.getElement().querySelector('.main-navigation__additional').classList.remove('main-navigation__additional--active');
-    }
-  }
-
   setFilterTypeChangeHandler(callback) {
     this._callback.filterTypeChange = callback;
     this.getElement().addEventListener('click', this._filterTypeChangeHandler);
@@ -65,6 +57,14 @@ export default class SiteMenu extends AbstractView {
   setStatisticClickHandler(callback) {
     this._callback.statisticClick = callback;
     this.getElement().querySelector('.main-navigation__additional').addEventListener('click', this._statisticClickHandler);
+  }
+
+  _filterTypeChangeHandler(evt) {
+    if (evt.target.closest('a')) {
+      this._callback.filterTypeChange(evt.target.closest('a').dataset.filterType);
+      evt.preventDefault();
+      this.getElement().querySelector('.main-navigation__additional').classList.remove('main-navigation__additional--active');
+    }
   }
 
   _statisticClickHandler(evt) {
