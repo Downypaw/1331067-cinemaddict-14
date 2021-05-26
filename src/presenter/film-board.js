@@ -9,7 +9,7 @@ import {sortFilmsDate} from '../util/date-time-util.js';
 import {sortFilmsRank, sortFilmsCommentsAmount} from '../util/film.js';
 import {generateId} from '../util/common.js';
 import {filter} from '../util/filter.js';
-import {getUpdateError} from '../util/error.js';
+import {toast} from '../util/toast.js';
 import FilmPresenter from './film.js';
 import {SortType, UpdateType, UserAction} from '../const.js';
 
@@ -161,6 +161,11 @@ export default class FilmBoard {
 
     this._renderSort();
     render(this._filmListContainer, this._filmListComponent);
+
+    if (filmCount > this._renderedFilmsCount) {
+      this._renderShowMoreButton();
+    }
+
     render(this._filmListComponent, this._topRatedListComponent);
     render(this._filmListComponent, this._mostCommentedListComponent);
     const allFilms = this._getFilms().slice(0, Math.min(filmCount, FILM_COUNT_PER_STEP));
@@ -168,6 +173,7 @@ export default class FilmBoard {
     const mostCommentedFilms = this._getFilms().filter((film) => film.comments.length !== 0).slice().sort(sortFilmsCommentsAmount).slice(0, this._topFilmsCount);
     if (filmCount > 0) {
       this._renderFilms(allFilms.slice(0, Math.min(filmCount, this._renderedFilmsCount)), this._allFilmsContainer);
+
       if (this._getFilms().some((film) => film.rank !== 0)) {
         this._renderFilms(topRatedFilms, this._topRatedContainer);
       }
@@ -175,10 +181,6 @@ export default class FilmBoard {
       if (this._getFilms().some((film) => film.comments.length !== 0)) {
         this._renderFilms(mostCommentedFilms, this._mostCommentedContainer);
       }
-    }
-
-    if (filmCount > this._renderedFilmsCount) {
-      this._renderShowMoreButton();
     }
   }
 
@@ -201,11 +203,14 @@ export default class FilmBoard {
   _handleViewAction(actionType, updateType, filmUpdate) {
     switch (actionType) {
       case UserAction.UPDATE_FILM:
+      console.log(filmUpdate);
         this._api.updateFilm(filmUpdate)
           .then((response) => {
             this._filmsModel.updateFilm(updateType, response);
           })
-          .catch(getUpdateError());
+          .catch(() => {
+            toast('This is an error in updating data!');
+          });
         break;
       case UserAction.ADD_COMMENT:
         this._api.updateFilm(filmUpdate)
