@@ -1,6 +1,6 @@
 import he from 'he';
 import SmartView from './smart.js';
-import {UserAction} from '../const';
+import {UserAction, ENTER_KEY_CODE} from '../const';
 import {formatDuration, formatReleaseDate, humanize} from '../util/date-time-util.js';
 
 const createGenreTemplate = (genre) => {
@@ -272,7 +272,7 @@ export default class FilmInformation extends SmartView  {
   }
 
   _sendCommentHandler(evt) {
-    if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === 13) {
+    if ((evt.ctrlKey || evt.metaKey) && evt.keyCode === ENTER_KEY_CODE) {
       if (this._data.isDisabled) {
         return;
       }

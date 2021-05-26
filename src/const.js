@@ -48,3 +48,12 @@ export const StoreElement = {
   FILMS: 'films',
   COMMENTS: 'comments',
 };
+
+export const ENTER_KEY_CODE = 13;
+
+export const FilmCountForUserRank = {
+  MIN_NOVICE: 0,
+  MAX_NOVICE: 10,
+  MAX_FAN: 20,
+
+}

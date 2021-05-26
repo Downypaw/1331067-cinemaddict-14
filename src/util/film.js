@@ -1,3 +1,5 @@
+import {FilmCountForUserRank} from '../const.js';
+
 export const sortFilmsRank = (filmA, filmB) => {
   const valueA = filmA.rank;
   const valueB = filmB.rank;
@@ -14,11 +16,11 @@ export const sortFilmsCommentsAmount = (filmA, filmB) => {
 
 export const defineUserRank = (films) => {
   const watchedFilms = films.filter((film) => film.isWatched === true).length;
-  if (watchedFilms < 0) {
+  if (watchedFilms < FilmCountForUserRank.MIN_NOVICE) {
     return 'No rank';
-  } else if (watchedFilms > 0 && watchedFilms <= 10) {
+  } else if (watchedFilms > FilmCountForUserRank.MIN_NOVICE && watchedFilms <= FilmCountForUserRank.MAX_NOVICE) {
     return 'Novice';
-  } else if (watchedFilms > 10 && watchedFilms <= 20){
+  } else if (watchedFilms > FilmCountForUserRank.MAX_NOVICE && watchedFilms <= FilmCountForUserRank.MAX_FAN) {
     return 'Fan';
   } else {
     return 'Movie Buff';
