@@ -55,5 +55,4 @@ export const FilmCountForUserRank = {
   MIN_NOVICE: 0,
   MAX_NOVICE: 10,
   MAX_FAN: 20,
-
-}
+};

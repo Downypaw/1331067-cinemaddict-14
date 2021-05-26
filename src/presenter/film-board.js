@@ -203,7 +203,6 @@ export default class FilmBoard {
   _handleViewAction(actionType, updateType, filmUpdate) {
     switch (actionType) {
       case UserAction.UPDATE_FILM:
-      console.log(filmUpdate);
         this._api.updateFilm(filmUpdate)
           .then((response) => {
             this._filmsModel.updateFilm(updateType, response);
