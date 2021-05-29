@@ -42,6 +42,7 @@ export default class FilmBoard {
 
     this._filmListComponent = new FilmListView();
     this._allFilmsContainer = this._filmListComponent.getElement().querySelector('.films-list__container');
+    this._allFilmsList = this._filmListComponent.getElement().querySelector('.films-list');
     this._topRatedListComponent = new ExtraListView(ExtraListTitles.TOP_RATED);
     this._mostCommentedListComponent = new ExtraListView(ExtraListTitles.MOST_COMMENTED);
     this._filmListEmptyComponent = new FilmListEmptyView();
@@ -124,7 +125,7 @@ export default class FilmBoard {
 
     this._showMoreButtonComponent = new ShowMoreButtonView();
     this._showMoreButtonComponent.setClickHandler(this._handleShowMoreButtonClick);
-    render(this._filmListComponent, this._showMoreButtonComponent);
+    render(this._allFilmsList, this._showMoreButtonComponent);
   }
 
   _clearBoard(resetSortType = false) {
